@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Testowanie</h1>
-<h2 th:text="|Nowy Znacznik|">tekst</h2>
+<ol th:each="item:${items}">
+    <li th:text="${item.getTitle()}"></li>
+</ol>
 </body>
 </html>

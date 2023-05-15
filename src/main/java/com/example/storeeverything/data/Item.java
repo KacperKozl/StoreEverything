@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @Data
-class Item {
+public class Item {
     String title;
     String content;
     String link;
@@ -21,6 +21,13 @@ class Item {
         add_date= dateFormat.format(Calendar.getInstance().getTime());
         reminder_date=reminder_date1;
         category=category1;
-
+    }
+    public Item(String title1,String content1,Category category1){
+        title=title1;
+        content=content1;
+        link="";
+        add_date= dateFormat.format(Calendar.getInstance().getTime());
+        reminder_date="";
+        category=category1;
     }
 }
