@@ -1,0 +1,12 @@
+p {
+    background: #AFEEEE;
+    padding: 5px;
+    border: 1px solid lightgray;
+}
+.textbox1 {
+    display: flex;
+    background: ghostwhite;
+    font-size: 15px;
+    padding: 5px;
+    border: 1px solid lightgray;
+}

@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/styles/text.css}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<h1>Notatki</h1>
+<form th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
+    <label>Posortuj po</label>
+    <select th:field="*{value}">
+        <option th:text="alfabetycznie" th:value="alf"></option>
+        <option th:text="data" th:value="date"></option>
+        <option th:text="kategoria" th:value="cat"></option>
+    </select>
+    <select th:field="*{direction}">
+        <option th:text="asc" th:value=1></option>
+        <option th:text="desc" th:value=-1></option>
+    </select>
+    <button name="submit" type="submit" value="0">Wyszukaj</button>
+</form>
+<form action="#" th:action="@{/items/filterbycategory}" th:object="${category}" method="POST">
+    <label>Wybierz kategorię</label>
+<select th:field="*{name}">
+    <option th:each="option : ${category_list}" th:value="${option.name}" th:text="${option.name}"></option>
+</select>
+    <button name="submit" type="submit" value="0">Wyszukaj</button>
+</form>
 <ol th:each="item:${items}">
-    <li th:text="${item.getTitle()}"></li>
+    <p>
+    <span class="textbox1" th:text="${item.getTitle()}"/>
+        <span class="textbox1" th:text="${item.getCategory().toString()}"/>
+    <span class="textbox1" th:text="${item.getContent()}"/>
+    <span class="textbox1" th:text="${item.getLink()}"/>
+    <span class="textbox1" th:text="${item.getAdd_date()}"/>
+    <span class="textbox1" th:text="${item.getReminder_date()}"/>
+
+    </p>
 </ol>
 </body>
 </html>

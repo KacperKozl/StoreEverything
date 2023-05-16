@@ -32,4 +32,7 @@ public class Item {
         reminder_date="";
         category=category1;
     }
+    public void setAdd_date(){
+        add_date= dateFormat.format(Calendar.getInstance().getTime());
+    }
 }
