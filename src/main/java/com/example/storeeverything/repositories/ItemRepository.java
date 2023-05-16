@@ -14,10 +14,17 @@ import java.util.List;
 @Getter
 public class ItemRepository {
     List<Item> items=new ArrayList<>();
+    List<Category> category_list=new ArrayList<>();
     public ItemRepository(){
         items.add(new Item("1","treść",new Category("a")));
         items.add(new Item("2","treść",new Category("b")));
         items.add(new Item("3","treść",new Category("c")));
+        category_list.add(new Category("a"));
+        category_list.add(new Category("b"));
+        category_list.add(new Category("c"));
+    }
+    public void dodaj(Item item){
+        items.add(item);
     }
      public void sortByName(){
          Collections.sort(items, new Comparator<Item>() {

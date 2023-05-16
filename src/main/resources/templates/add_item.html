@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a>Dodaj notatkę</a>
+<form action="#" th:action="@{/items/add}" th:object="${newItem}" method="POST">
+    <p>Tytuł:<input type="text" th:field="*{title}"/></p>
+    <p>Zawartość:<input type="text" th:field="*{content}"/></p>
+    <p>Link:<input type="text" th:field="*{link}"/></p>
+    <p>Data przypomnienia:<input type="text" th:field="*{reminder_date}"/></p>
+    <span>
+    <select th:field="*{category}">
+        <option value="">Wybierz kategorię:</option>
+        <option th:each="option : ${category_list}" th:value="${option.name}" th:text="${option.name}"></option>
+    </select>
+    </span>
+    <button name="submit" type="submit" value="0">Dodaj</button>
+</form>
+</body>
+</html>
