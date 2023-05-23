@@ -28,7 +28,7 @@
     <button name="submit" type="submit" value="0">Wyszukaj</button>
 </form>
 <ol th:each="item:${items}">
-    <p>
+    <p class="textbox2">
     <span class="textbox1" th:text="${item.getTitle()}"/>
         <span class="textbox1" th:text="${item.getCategory().toString()}"/>
     <span class="textbox1" th:text="${item.getContent()}"/>

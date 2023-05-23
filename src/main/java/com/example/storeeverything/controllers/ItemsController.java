@@ -5,12 +5,11 @@ import com.example.storeeverything.data.Category;
 import com.example.storeeverything.data.Item;
 import com.example.storeeverything.data.SortIndex;
 import com.example.storeeverything.repositories.ItemRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/items")
@@ -31,14 +30,18 @@ public class ItemsController {
         return "redirect:/items/";
     }
 
-    @GetMapping("/manage")
+    @GetMapping("/add")
     public String add(Model model){
         model.addAttribute("newItem",new Item());
         model.addAttribute("category_list",repozytorium.getCategory_list());
         return "add_item";
     }
     @PostMapping("/add")
-    public String addItems(Item newItem){
+    public String addItems(@Valid @ModelAttribute("newItem") Item newItem, BindingResult result, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("category_list",repozytorium.getCategory_list());
+            return "add_item";
+        }
         newItem.setAdd_date();
         repozytorium.dodaj(newItem);
         return "redirect:/items/";

@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/styles/text.css}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dodaj Notatkę</title>
 </head>
 <body>
 <a>Dodaj notatkę</a>
 <form action="#" th:action="@{/items/add}" th:object="${newItem}" method="POST">
-    <p>Tytuł:<input type="text" th:field="*{title}"/></p>
-    <p>Zawartość:<input type="text" th:field="*{content}"/></p>
+    <p>Tytuł:<input type="text" th:field="*{title}"/><span class="error-message" th:errors="*{title}">Błąd tytułu</span></p>
+    <p>Zawartość:<input type="text" th:field="*{content}"/><span class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Błąd treści</span></p>
     <p>Link:<input type="text" th:field="*{link}"/></p>
     <p>Data przypomnienia:<input type="text" th:field="*{reminder_date}"/></p>
     <span>
+        <label>Wybierz kategorię:</label>
     <select th:field="*{category}">
-        <option value="">Wybierz kategorię:</option>
         <option th:each="option : ${category_list}" th:value="${option.name}" th:text="${option.name}"></option>
     </select>
+        <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Błąd kategorii</span>
     </span>
     <button name="submit" type="submit" value="0">Dodaj</button>
 </form>
