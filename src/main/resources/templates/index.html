@@ -12,8 +12,9 @@
     <label>Posortuj po</label>
     <select th:field="*{value}">
         <option th:text="alfabetycznie" th:value="alf"></option>
-        <option th:text="data" th:value="date"></option>
+        <option th:text="data_dodania" th:value="A_date"></option>
         <option th:text="kategoria" th:value="cat"></option>
+        <option th:text="data_przypomnienia" th:value="R_date"></option>
     </select>
     <select th:field="*{direction}">
         <option th:text="asc" th:value=1></option>
@@ -33,9 +34,9 @@
     <span class="textbox1" th:text="${item.getTitle()}"/>
         <span class="textbox1" th:text="${item.getCategory().toString()}"/>
     <span class="textbox1" th:text="${item.getContent()}"/>
-    <span class="textbox1" th:text="${item.getLink()}"/>
-    <span class="textbox1" th:text="${item.getAdd_date()}"/>
-    <span class="textbox1" th:text="${item.getReminder_date()}"/>
+    <a class="textbox1" th:href="@{http://{link}(link=${item.getLink()})}" th:text="${item.getLink()}"/>
+    <span class="textbox1" th:text="${item.getAdd()}"/>
+    <span class="textbox1" th:text="${item.getReminder()}"/>
 
     </p>
 </ol>

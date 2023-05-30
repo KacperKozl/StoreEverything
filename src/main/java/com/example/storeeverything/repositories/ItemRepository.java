@@ -5,10 +5,7 @@ import com.example.storeeverything.data.Item;
 import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Repository
 @Getter
@@ -42,6 +39,24 @@ public class ItemRepository {
             @Override
             public int compare(Item o1, Item o2) {
                 return x*o1.getCategory().compareTo(o2.getCategory());
+            }
+        });
+    }
+    public void sortByAddDate(int x){
+        Collections.sort(items, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                return x*o1.getAdd_date().compareTo(o2.getAdd_date());
+            }
+        });
+    }
+    public void sortByReminderDate(int x){
+        Collections.sort(items, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                if(Objects.isNull(o1.getReminder_date())) return x;
+                if(Objects.isNull(o2.getReminder_date())) return -x;
+                return x*o1.getReminder_date().compareTo(o2.getReminder_date());
             }
         });
     }

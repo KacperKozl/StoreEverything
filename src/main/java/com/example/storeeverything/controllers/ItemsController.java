@@ -27,6 +27,8 @@ public class ItemsController {
     public String showItems(SortIndex sortIndex, Model model){
         if(sortIndex.getValue().equals("alf")) repozytorium.sortByName(sortIndex.getDirection());
         if(sortIndex.getValue().equals("cat")) repozytorium.sortByCategory(sortIndex.getDirection());
+        if(sortIndex.getValue().equals("A_date")) repozytorium.sortByAddDate(sortIndex.getDirection());
+        if(sortIndex.getValue().equals("R_date")) repozytorium.sortByReminderDate(sortIndex.getDirection());
         return "redirect:/items/";
     }
 
