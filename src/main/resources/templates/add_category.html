@@ -7,10 +7,12 @@
 </head>
 <body>
 <header th:insert="navbar.html :: basic"> </header>
-<a>Dodaj kategorię</a>
-<form action="#" th:action="@{/items/category/add}" th:object="${newCategory}" method="POST">
-    <p>Nazwa:<input type="text" th:field="*{name}"/><span class="error-message" th:errors="*{name}">Błąd nazwy</span></p>
-    <button name="submit" type="submit" value="0">Dodaj</button>
-</form>
+<div class="container">
+    <a>Dodaj kategorię</a>
+    <form action="#" th:action="@{/items/category/add}" th:object="${newCategory}" method="POST">
+        <p>Nazwa:<input type="text" th:field="*{name}"/><span class="error-message" th:errors="*{name}">Błąd nazwy</span></p>
+        <button name="submit" type="submit" value="0">Dodaj</button>
+    </form>
+</div>
 </body>
 </html>

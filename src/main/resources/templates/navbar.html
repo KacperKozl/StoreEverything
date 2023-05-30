@@ -5,10 +5,13 @@
     <title>NavigationBar</title>
 </head>
 <body>
-    <div th:fragment="basic">
-        <a th:href="@{/items/}">Notatki</a>
-        <a th:href="@{/items/add}">Dodaj notatkę</a>
-        <a th:href="@{/items/category/add}">Dodaj kategorię</a>
+    <div class="nav-bar" th:fragment="basic">
+        <h3 class="logo">StoreEverything</h3>
+       <ul class="nav-bar-links">
+           <li><a th:href="@{/items/}">Notatki</a></li>
+           <li><a th:href="@{/items/add}">Dodaj notatkę</a></li>
+           <li><a th:href="@{/items/category/add}">Dodaj kategorię</a></li>
+       </ul>
     </div>
 </body>
 </html>

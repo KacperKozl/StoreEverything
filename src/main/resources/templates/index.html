@@ -7,38 +7,42 @@
 </head>
 <body>
 <header th:insert="navbar.html :: basic"> </header>
-<h1>Notatki</h1>
-<form th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
-    <label>Posortuj po</label>
-    <select th:field="*{value}">
-        <option th:text="alfabetycznie" th:value="alf"></option>
-        <option th:text="data_dodania" th:value="A_date"></option>
-        <option th:text="kategoria" th:value="cat"></option>
-        <option th:text="data_przypomnienia" th:value="R_date"></option>
-    </select>
-    <select th:field="*{direction}">
-        <option th:text="asc" th:value=1></option>
-        <option th:text="desc" th:value=-1></option>
-    </select>
-    <button name="submit" type="submit" value="0">Wyszukaj</button>
-</form>
-<form action="#" th:action="@{/items/filterbycategory}" th:object="${category}" method="POST">
-    <label>Wybierz kategorię</label>
-<select th:field="*{name}">
-    <option th:each="option : ${category_list}" th:value="${option.name}" th:text="${option.name}"></option>
-</select>
-    <button name="submit" type="submit" value="0">Wyszukaj</button>
-</form>
-<ol th:each="item:${items}">
-    <p class="textbox2">
-    <span class="textbox1" th:text="${item.getTitle()}"/>
-        <span class="textbox1" th:text="${item.getCategory().toString()}"/>
-    <span class="textbox1" th:text="${item.getContent()}"/>
-    <a class="textbox1" th:href="@{http://{link}(link=${item.getLink()})}" th:text="${item.getLink()}"/>
-    <span class="textbox1" th:text="${item.getAdd()}"/>
-    <span class="textbox1" th:text="${item.getReminder()}"/>
+<div class="container">
+    <h1>Notatki</h1>
+        <div class="items-main">">
+            <form th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
+                <label>Posortuj po</label>
+                <select th:field="*{value}">
+                    <option th:text="alfabetycznie" th:value="alf"></option>
+                    <option th:text="data_dodania" th:value="A_date"></option>
+                    <option th:text="kategoria" th:value="cat"></option>
+                    <option th:text="data_przypomnienia" th:value="R_date"></option>
+                </select>
+                <select th:field="*{direction}">
+                    <option th:text="asc" th:value=1></option>
+                    <option th:text="desc" th:value=-1></option>
+                </select>
+                <button name="submit" type="submit" value="0">Wyszukaj</button>
+            </form>
+            <form action="#" th:action="@{/items/filterbycategory}" th:object="${category}" method="POST">
+                <label>Wybierz kategorię</label>
+            <select th:field="*{name}">
+                <option th:each="option : ${category_list}" th:value="${option.name}" th:text="${option.name}"></option>
+            </select>
+                <button name="submit" type="submit" value="0">Wyszukaj</button>
+            </form>
+            <ol th:each="item:${items}">
+                <p class="textbox2">
+                <span class="textbox1" th:text="${item.getTitle()}"/>
+                    <span class="textbox1" th:text="${item.getCategory().toString()}"/>
+                <span class="textbox1" th:text="${item.getContent()}"/>
+                <a class="textbox1" th:href="@{http://{link}(link=${item.getLink()})}" th:text="${item.getLink()}"/>
+                <span class="textbox1" th:text="${item.getAdd()}"/>
+                <span class="textbox1" th:text="${item.getReminder()}"/>
 
-    </p>
-</ol>
+                </p>
+            </ol>
+    </div>
+</div>
 </body>
 </html>
