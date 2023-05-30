@@ -26,6 +26,9 @@ public class ItemRepository {
     public void dodaj(Item item){
         items.add(item);
     }
+    public void dodajkategorie(Category category){
+        category_list.add(category);
+    }
      public void sortByName(int x){
          Collections.sort(items, new Comparator<Item>() {
              @Override

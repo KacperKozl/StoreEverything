@@ -55,4 +55,17 @@ public class ItemsController {
         model.addAttribute("items",repozytorium.filterByCategory(e));
         return "index";
     }
+    @GetMapping("/category/add")
+    public String addCategory(Model model){
+        model.addAttribute("newCategory",new Category());
+        return "add_category";
+    }
+    @PostMapping("/category/add")
+    public String addCategory(@Valid @ModelAttribute("newCategory") Category newCategory, BindingResult result, Model model){
+        if(result.hasErrors()){
+            return "add_category";
+        }
+        repozytorium.dodajkategorie(newCategory);
+        return "redirect:/items/";
+    }
 }

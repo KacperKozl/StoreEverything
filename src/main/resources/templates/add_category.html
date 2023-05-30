@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/styles/text.css}">
+    <meta charset="UTF-8">
+    <title>Dodaj Kategorię</title>
+</head>
+<body>
+<a>Dodaj kategorię</a>
+<form action="#" th:action="@{/items/category/add}" th:object="${newCategory}" method="POST">
+    <p>Nazwa:<input type="text" th:field="*{name}"/><span class="error-message" th:errors="*{name}">Błąd nazwy</span></p>
+    <button name="submit" type="submit" value="0">Dodaj</button>
+</form>
+</body>
+</html>

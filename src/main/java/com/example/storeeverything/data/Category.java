@@ -1,13 +1,18 @@
 package com.example.storeeverything.data;
 
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @Getter
 @ToString
+@NoArgsConstructor
 public class Category {
+    @Pattern(regexp = "[a-z]{3,20}",message = "Nazwa kategorii musi mieć pomiędzy 3-20 małych liter.")
     String name;
     public Category(String s){
         name=s;
