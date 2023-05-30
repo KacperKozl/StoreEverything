@@ -6,6 +6,7 @@
     <title>Dodaj Notatkę</title>
 </head>
 <body>
+<header th:insert="navbar.html :: basic"> </header>
 <a>Dodaj notatkę</a>
 <form action="#" th:action="@{/items/add}" th:object="${newItem}" method="POST">
     <p>Tytuł:<input type="text" th:field="*{title}"/><span class="error-message" th:errors="*{title}">Błąd tytułu</span></p>

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:fragment="navbars">
     <meta charset="UTF-8">
     <title>NavigationBar</title>
 </head>
 <body>
-
+    <div th:fragment="basic">
+        <a th:href="@{/items/}">Notatki</a>
+        <a th:href="@{/items/add}">Dodaj notatkę</a>
+        <a th:href="@{/items/category/add}">Dodaj kategorię</a>
+    </div>
 </body>
 </html>

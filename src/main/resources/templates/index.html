@@ -6,6 +6,7 @@
     <title>Title</title>
 </head>
 <body>
+<header th:insert="navbar.html :: basic"> </header>
 <h1>Notatki</h1>
 <form th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
     <label>Posortuj po</label>
