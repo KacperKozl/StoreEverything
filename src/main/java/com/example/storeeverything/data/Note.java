@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Data
 @NoArgsConstructor
-public class Item {
+public class Note {
     @Size(min=3, max=20,message = "{error.size}")
     String title;
     @Size(min=5, max=500,message = "{error.size}")
@@ -26,7 +26,7 @@ public class Item {
     Date reminder_date;
     @NotNull
     Category category;
-    public Item(String title1, String content1, String link1, Date reminder_date1, Category category1){
+    public Note(String title1, String content1, String link1, Date reminder_date1, Category category1){
         title=title1;
         content=content1;
         link= URLEncoder.encode(link1);
@@ -34,7 +34,7 @@ public class Item {
         reminder_date=reminder_date1;
         category=category1;
     }
-    public Item(String title1,String content1,Category category1){
+    public Note(String title1, String content1, Category category1){
         title=title1;
         content=content1;
         link="";
