@@ -14,12 +14,14 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 public class Note {
+    Integer id;
     @Size(min=3, max=20,message = "{error.size}")
     String title;
     @Size(min=5, max=500,message = "{error.size}")
     String content;
     String link;
     static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date add_date;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @FutureOrPresent(message = "Data nie może być przeszła")

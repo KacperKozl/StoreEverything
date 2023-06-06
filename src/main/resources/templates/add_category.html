@@ -9,7 +9,7 @@
 <header th:insert="navbar.html :: basic"> </header>
 <div class="container">
 
-    <form action="#" th:action="@{/items/category/add}" th:object="${newCategory}" method="POST">
+    <form class="form" action="#" th:action="@{/items/category/add}" th:object="${newCategory}" method="POST">
         <h2>Add Category</h2>
         <label th:for="name">Name</label>
         <input type="text" th:field="*{name}"/><span class="error-message" th:errors="*{name}">Błąd nazwy</span>

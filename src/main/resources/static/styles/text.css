@@ -12,6 +12,8 @@ body {
     position: relative;
     margin: 10vh auto 0 auto;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 a {
@@ -23,6 +25,7 @@ a {
     padding: 1% 3%;
     cursor: pointer;
     margin: 10px;
+    border: none;
     border-radius: 14px;
 }
 
@@ -92,7 +95,7 @@ a {
 
 /* FORM */
 
-form {
+.form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,7 +103,7 @@ form {
     padding: 10vh 20vw;
     border-radius: 28px;
     position: relative;
-    width: 400px;
+    width: 800px;
     margin: 5% auto;
     background: #fff;
 }
@@ -112,7 +115,6 @@ form input {
     border: none;
     border-bottom: 2px solid #303030;
     box-sizing: border-box;
-    /*border-radius: 14px;*/
 }
 
 form input:focus {
@@ -127,15 +129,38 @@ select {
     background-color: #f1f1f1;
 }
 
-.box {
+/**/
+
+.notes-box {
     display: flex;
     flex-direction: column;
-    flex:50%;
+    background: #fff;
+    border-radius: 28px;
+    margin: 4% auto;
+    width: 600px;
 }
+
+.notes-box-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.notes-box-item-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 .textbox2 {
     background: #AFEEEE;
     padding: 5px;
+    min-width: 400px;
+    max-width: 600px;
     margin: 0 auto;
     border: 1px solid lightgray;
 }

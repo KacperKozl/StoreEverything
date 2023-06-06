@@ -10,7 +10,7 @@
 <div class="container">
 
         <div class="items-main">
-            <form th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
+            <form class="form" th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
                 <h2>Notes</h2>
                 <label th:for="value">Posortuj po</label>
                 <select th:field="*{value} ">
@@ -26,7 +26,8 @@
                 </select>
                 <button class="btn" name="submit" type="submit" value="0">Wyszukaj</button>
             </form>
-            <form action="#" th:action="@{/items/filterbycategory}" th:object="${category}" method="POST">
+
+            <form class="form" action="#" th:action="@{/items/filterbycategory}" th:object="${category}" method="POST">
                 <label th:for="name">Wybierz kategorię</label>
             <select th:field="*{name}">
                 <option th:each="option : ${category_list}" th:value="${option.categoryName}" th:text="${option.categoryName}"></option>
@@ -34,8 +35,10 @@
                 <button class="btn" name="submit" type="submit" value="0">Wyszukaj</button>
             </form>
 
-            <div class="box">
-                <ol th:each="note:${notes}">
+
+        <div class="notes-box">
+            <ol th:each="note:${notes}">
+                <div class="notes-box-item">
                     <p class="textbox2">
                     <span class="textbox1" th:text="${note.title}"/>
                         <span class="textbox1" th:text="${note.categoryName.categoryName}"/>
@@ -43,9 +46,23 @@
                     <a class="textbox1" th:href="@{http://{link}(link=${note.link})}" th:text="${note.link}"/>
                     <span class="textbox1" th:text="${note.getAdd}"/>
                     <span class="textbox1" th:text="${note.getReminder}"/>
+
+                    <div class="notes-box-item-buttons">
+                        <form action="#" th:action="@{/items/edit/init}" th:object="${indeks}" method="POST">
+                            <input type="hidden" th:value="${note.id}"id="value" name="value"/>
+                            <button class="btn" name="submit" type="submit">Edit</button>
+                        </form>
+
+                        <form action="#" th:action="@{/items/delete}" th:object="${indeks}" method="POST">
+                            <input type="hidden" th:value="${note.id}"id="value1" name="value"/>
+                            <button class="btn" name="submit" type="submit">Delete</button>
+                        </form>
+                    </div>
                     </p>
-                </ol>
-            </div>
+                </div>
+            </ol>
+        </div>
+
     </div>
 </div>
 </body>

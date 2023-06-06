@@ -27,6 +27,7 @@ public class dbService {
     NotesEntityRepository notesEntityRepository;
     public NotesEntity convertNote(Note newNote){
         NotesEntity ent=new NotesEntity();
+        ent.setId(newNote.getId());
         ent.setTitle(newNote.getTitle());
         ent.setContent(newNote.getContent());
         ent.setLink(newNote.getLink());

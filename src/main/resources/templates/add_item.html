@@ -8,7 +8,7 @@
 <body>
 <header th:insert="navbar.html :: basic"> </header>
 <div class="container">
-    <form action="#" th:action="@{/items/add}" th:object="${newNote}" method="POST">
+    <form class="form" action="#" th:action="@{/items/add}" th:object="${newNote}" method="POST">
         <h2>Add note</h2>
         <label th:for="title">Title</label>
         <input type="text" th:field="*{title}"/><span class="error-message" th:errors="*{title}">Błąd tytułu</span>
