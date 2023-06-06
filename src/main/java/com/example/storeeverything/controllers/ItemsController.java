@@ -106,4 +106,9 @@ public class ItemsController {
         service.getNotesEntityRepository().save(note);
         return "redirect:/items/";
     }
+    @PostMapping("/delete")
+    public String deleteNote(Model model, @ModelAttribute("indeks") Indeks indeks){
+        service.getNotesEntityRepository().deleteById(indeks.getValue());
+        return "redirect:/items/";
+    }
 }

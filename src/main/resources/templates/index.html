@@ -46,6 +46,10 @@
                 <input type="hidden" th:value="${note.id}"id="value" name="value"/>
                 <button name="submit" type="submit">Edytuj</button>
                 </form>
+                <form action="#" th:action="@{/items/delete}" th:object="${indeks}" method="POST">
+                    <input type="hidden" th:value="${note.id}"id="value1" name="value"/>
+                    <button name="submit" type="submit">Usuń</button>
+                </form>
                 </p>
             </ol>
         </div>
