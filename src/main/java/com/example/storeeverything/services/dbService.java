@@ -25,7 +25,7 @@ public class dbService {
     CategoriesEntityRepository categoriesEntityRepository;
     @Autowired
     NotesEntityRepository notesEntityRepository;
-    public void addNewNote(Note newNote){
+    public NotesEntity convertNote(Note newNote){
         NotesEntity ent=new NotesEntity();
         ent.setTitle(newNote.getTitle());
         ent.setContent(newNote.getContent());
@@ -35,6 +35,10 @@ public class dbService {
         String catName=newNote.getCategory().getName();
         CategoriesEntity newCat=findCategory(catName);
         ent.setCategoryName(newCat);
+        return ent;
+    }
+    public void addNewNote(Note newNote){
+        NotesEntity ent=convertNote(newNote);
         notesEntityRepository.saveAndFlush(ent);
     }
     public void addNewCategory(Category category){
