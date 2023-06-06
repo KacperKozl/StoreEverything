@@ -101,7 +101,7 @@ form {
     border-radius: 28px;
     position: relative;
     width: 400px;
-    margin: 0 auto;
+    margin: 5% auto;
     background: #fff;
 }
 
@@ -136,6 +136,7 @@ select {
 .textbox2 {
     background: #AFEEEE;
     padding: 5px;
+    margin: 0 auto;
     border: 1px solid lightgray;
 }
 .textbox1 {
