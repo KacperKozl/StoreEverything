@@ -13,9 +13,9 @@ public class ItemRepository {
     List<Note> notes =new ArrayList<>();
     List<Category> category_list=new ArrayList<>();
     public ItemRepository(){
-        notes.add(new Note("1","treść",new Category("c")));
-        notes.add(new Note("2","treść",new Category("b")));
-        notes.add(new Note("3","treść",new Category("a")));
+        notes.add(new Note("1","treść", new Category("c")));
+        notes.add(new Note("2","treść", new Category("b")));
+        notes.add(new Note("3","treść", new Category("a")));
         category_list.add(new Category("a"));
         category_list.add(new Category("b"));
         category_list.add(new Category("c"));

@@ -8,20 +8,27 @@
 <body>
 <header th:insert="navbar.html :: basic"> </header>
 <div class="container">
-    <a>Dodaj notatkę</a>
     <form action="#" th:action="@{/items/add}" th:object="${newNote}" method="POST">
-        <p>Tytuł:<input type="text" th:field="*{title}"/><span class="error-message" th:errors="*{title}">Błąd tytułu</span></p>
-        <p>Zawartość:<input type="text" th:field="*{content}"/><span class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Błąd treści</span></p>
-        <p>Link:<input type="text" th:field="*{link}"/></p>
-        <p>Data przypomnienia:<input type="date" th:field="*{reminder_date}"/><span class="error-message" th:if="${#fields.hasErrors('reminder_date')}" th:errors="*{reminder_date}">Błąd daty</span></p>
-        <span>
-            <label>Wybierz kategorię:</label>
+        <h2>Add note</h2>
+        <label th:for="title">Title</label>
+        <input type="text" th:field="*{title}"/><span class="error-message" th:errors="*{title}">Błąd tytułu</span>
+
+        <label th:for="content">Content</label>
+        <input type="text" th:field="*{content}"/><span class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Błąd treści</span>
+
+        <label th:for="link">Link</label>
+        <input type="text" th:field="*{link}"/>
+
+        <label th:for="reminder_date">Reminder date</label>
+        <input type="date" th:field="*{reminder_date}"/><span class="error-message" th:if="${#fields.hasErrors('reminder_date')}" th:errors="*{reminder_date}">Błąd daty</span>
+
+            <label th:for="category">Select a category:</label>
         <select th:field="*{category}">
             <option th:each="option : ${category_list}" th:value="${option.categoryName}" th:text="${option.categoryName}"></option>
         </select>
             <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Błąd kategorii</span>
-        </span>
-        <button name="submit" type="submit" value="0">Dodaj</button>
+
+        <button class="btn" name="submit" type="submit" value="0">Add</button>
     </form>
 </div>
 </body>
