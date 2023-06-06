@@ -37,8 +37,8 @@ public class ItemsController {
     public String showItems(SortIndex sortIndex, Model model){
         if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByTitleAsc());
         if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByTitleDesc());
-        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByCategoryNameAsc());
-        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByCategoryNameDesc());
+        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByCategoryName_CategoryNameAsc());
+        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByCategoryName_CategoryNameDesc());
         if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByAddDateAsc());
         if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByAddDateDesc());
         if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByReminderDateAsc());

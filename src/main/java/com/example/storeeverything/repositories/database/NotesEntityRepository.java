@@ -14,17 +14,18 @@ import java.util.Optional;
 
 @Repository
 public interface NotesEntityRepository extends JpaRepository<NotesEntity, Integer> {
+    NotesEntity findFirstByIdOrderByCategoryName_CategoryNameAsc(Integer id);
     @Transactional
     @Modifying
     @Query("""
             update NotesEntity n set n.title = ?1
             where n.title = ?2 and n.content = ?3 and n.reminderDate = ?4 and n.categoryName = ?5 and n.isPublic = ?6""")
-    int updateTitleByTitleAndContentAndReminderDateAndCategoryNameAndIsPublic(String title, String title1, String content, Date reminderDate, CategoriesEntity categoryName, Boolean isPublic);
+    
     NotesEntity findByCategoryName_CategoryName(String categoryName);
     List<NotesEntity> findAllByOrderByTitleAsc();
     List<NotesEntity> findAllByOrderByTitleDesc();
-    List<NotesEntity> findAllByOrderByCategoryNameAsc();
-    List<NotesEntity> findAllByOrderByCategoryNameDesc();
+    List<NotesEntity> findAllByOrderByCategoryName_CategoryNameAsc();
+    List<NotesEntity> findAllByOrderByCategoryName_CategoryNameDesc();
     List<NotesEntity> findAllByOrderByAddDateAsc();
     List<NotesEntity> findAllByOrderByAddDateDesc();
     List<NotesEntity> findAllByOrderByReminderDateAsc();
@@ -33,4 +34,6 @@ public interface NotesEntityRepository extends JpaRepository<NotesEntity, Intege
 
     @Override
     Optional<NotesEntity> findById(Integer integer);
+
+
 }
