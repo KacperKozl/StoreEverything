@@ -1,12 +1,15 @@
 package com.example.storeeverything.controllers;
 
 import com.example.storeeverything.data.Category;
+import com.example.storeeverything.data.Indeks;
 import com.example.storeeverything.data.Note;
 import com.example.storeeverything.data.SortIndex;
+import com.example.storeeverything.data.database.NotesEntity;
 import com.example.storeeverything.repositories.ItemRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
 import com.example.storeeverything.services.dbService;
 import jakarta.validation.Valid;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,7 @@ public class ItemsController {
 
     @GetMapping("/")
     public String start(Model model){
+        model.addAttribute("indeks",new Indeks());
         model.addAttribute("notes",service.getNotesEntityRepository().findAll());
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
@@ -80,6 +84,26 @@ public class ItemsController {
             return "add_category";
         }
         service.addNewCategory(newCategory);
+        return "redirect:/items/";
+    }
+    @PostMapping("/edit/init")
+    public String editNote(Model model, @ModelAttribute("indeks") Indeks indeks){
+        NotesEntity note=service.getNotesEntityRepository().findById(indeks.getValue()).get();
+        model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+        model.addAttribute("editedNote",note);
+        model.addAttribute("newNote",new Note());
+        return "edit_note";
+    }
+    @PostMapping("/edit")
+    public String editNote(@Valid @ModelAttribute("newNote") Note newNote, BindingResult result, Model model){
+        NotesEntity note=service.convertNote(newNote);
+        if(result.hasErrors()){
+            System.out.println(result.getAllErrors());
+            model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+            model.addAttribute("editedNote",note);
+            return "edit_note";
+        }
+        service.getNotesEntityRepository().save(note);
         return "redirect:/items/";
     }
 }

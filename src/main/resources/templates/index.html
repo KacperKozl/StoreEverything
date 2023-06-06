@@ -39,7 +39,10 @@
                 <a class="textbox1" th:href="@{http://{link}(link=${note.link})}" th:text="${note.link}"/>
                 <span class="textbox1" th:text="${note.getAdd}"/>
                 <span class="textbox1" th:text="${note.getReminder}"/>
-
+                <form action="#" th:action="@{/items/edit/init}" th:object="${indeks}" method="POST">
+                <input type="hidden" th:value="${note.id}"id="value" name="value"/>
+                <button name="submit" type="submit">Edytuj</button>
+                </form>
                 </p>
             </ol>
     </div>
