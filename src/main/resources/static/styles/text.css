@@ -21,11 +21,16 @@ a {
     color: #393646;
 }
 
+ol {
+    list-style: none;
+    padding: 0;
+}
+
 .btn {
     padding: 1% 3%;
     cursor: pointer;
     margin: 10px;
-    border: none;
+    border: 1px solid #303030;
     border-radius: 14px;
 }
 
@@ -93,6 +98,20 @@ a {
     width: 100%;
 }
 
+/* INDEX PAGE */
+
+.forms-index-container {
+    display: flex;
+    flex-direction: row;
+    place-items: center;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.form-index-item {
+}
+
 /* FORM */
 
 .form {
@@ -145,6 +164,7 @@ select {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    place-items: center;
 }
 
 .notes-box-item-buttons {
@@ -153,6 +173,7 @@ select {
     justify-content: center;
     align-items: center;
 }
+
 
 
 
