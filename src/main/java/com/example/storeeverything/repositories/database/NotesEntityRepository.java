@@ -31,6 +31,11 @@ public interface NotesEntityRepository extends JpaRepository<NotesEntity, Intege
     List<NotesEntity> findAllByOrderByReminderDateAsc();
     List<NotesEntity> findAllByOrderByReminderDateDesc();
 
+    @Query("SELECT n FROM NotesEntity n LEFT JOIN n.categoryName c GROUP BY c, n.id ORDER BY COUNT(n.id) ASC")
+    List<NotesEntity> sortByPopularCategoriesAsc();
+
+    @Query("SELECT n FROM NotesEntity n LEFT JOIN n.categoryName c GROUP BY c, n.id ORDER BY COUNT(n.id) DESC")
+    List<NotesEntity> sortByPopularCategoriesDesc();
 
     @Override
     Optional<NotesEntity> findById(Integer integer);
