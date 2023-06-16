@@ -69,4 +69,15 @@ public class ItemRepository {
         }
         return filtered;
      }
+
+    public Map<String, Integer> countNotesByCategory() {
+        Map<String, Integer> categoryCount = new HashMap<>();
+
+        for (Note note : notes) {
+            String categoryName = note.getCategory().getName();
+            categoryCount.put(categoryName, categoryCount.getOrDefault(categoryName, 0) + 1);
+        }
+
+        return categoryCount;
+    }
 }
