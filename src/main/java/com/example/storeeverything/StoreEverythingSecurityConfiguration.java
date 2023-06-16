@@ -30,6 +30,12 @@ class StoreEverythingSecurityConfiguration {
                         .roles("USER")
                         .build();
 
+        UserDetails weak_user =
+                User.withUsername("user2")
+                        .password("user2")
+                        .roles("USER_WEAK")
+                        .build();
+
         UserDetails admin =
                 User.withUsername("admin")
                         .password("admin")
@@ -38,6 +44,9 @@ class StoreEverythingSecurityConfiguration {
 
         System.out.println(user.getUsername()+"" + user.getPassword()+
                 "" +user.getAuthorities());
+
+        System.out.println(weak_user.getUsername()+"" + weak_user.getPassword()+
+                "" +weak_user.getAuthorities());
 
         System.out.println(admin.getUsername()+"" + admin.getPassword()+
                 "" +admin.getAuthorities());
@@ -49,8 +58,13 @@ class StoreEverythingSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/").permitAll() // access to all users
+                        .anyRequest().authenticated() // access to the rest of the resources regardless of the role
+                )
+                .formLogin((form) -> form //redirect to the login page regardless of the string
+                        .loginPage("/login")
+                        .permitAll()
+
                 )
                 .logout((logout) -> logout.logoutSuccessUrl("/").permitAll());
 
