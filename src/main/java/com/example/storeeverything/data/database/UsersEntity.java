@@ -14,7 +14,7 @@ public class UsersEntity {
     private int userId;
     @Basic
     @Column(name = "NAME", nullable = true, length = 20)
-    private Object name;
+    private Object username;
     @Basic
     @Column(name = "SURNAME", nullable = true, length = 50)
     private Object surname;
@@ -34,10 +34,10 @@ public class UsersEntity {
     public Integer getId(){
         return userId;
     }
-//    public Object getUsername(){
-//        return getUsername();
-//    }
-//    public Object getPassword(){
-//        return password;
-//    }
+    public String getUsername(){
+        return (String) username;
+    }
+    public String getPassword(){
+        return (String) password;
+    }
 }

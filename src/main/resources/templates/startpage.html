@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles/text.css}">
+    <title>Homepage</title>
+</head>
+<body>
+  <div class="container">
+    <div class="home-container">
+      <h1 class="home-heading">Welcome to StoreEverything</h1>
+      <p class="home-text">Don't keep notes in your head, give them life!</p>
+      <div class="home-buttons">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}" class="btn">Register</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="btn">Login</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

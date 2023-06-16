@@ -14,7 +14,7 @@
             <div class="forms-index-container">
                 <form class="form-index-item" th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
                     <h2 sec:authorize="isAuthenticated()">
-                        Welcome to Notes <span sec:authentication="name"></span>
+                        Welcome to StoreEverything:  <span sec:authentication="name"></span>
                     </h2>
                     <label th:for="value">Posortuj po</label>
                     <select th:field="*{value} ">

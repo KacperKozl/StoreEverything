@@ -1,9 +1,6 @@
 package com.example.storeeverything.controllers;
 
-import com.example.storeeverything.data.Category;
-import com.example.storeeverything.data.Indeks;
-import com.example.storeeverything.data.Note;
-import com.example.storeeverything.data.SortIndex;
+import com.example.storeeverything.data.*;
 import com.example.storeeverything.data.database.NotesEntity;
 import com.example.storeeverything.repositories.ItemRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
@@ -86,6 +83,14 @@ public class ItemsController {
         service.addNewCategory(newCategory);
         return "redirect:/items/";
     }
+//    @PostMapping("/register")
+//    public String addUser(@Valid @ModelAttribute("newUser") User newUser, BindingResult result, Model model){
+//        if(result.hasErrors()){
+//            return "register";
+//        }
+//        service.addNewUser(newUser);
+//        return "redirect:/login";
+//    }
     @PostMapping("/edit/init")
     public String editNote(Model model, @ModelAttribute("indeks") Indeks indeks){
         NotesEntity note=service.getNotesEntityRepository().findById(indeks.getValue()).get();

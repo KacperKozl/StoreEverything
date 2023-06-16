@@ -10,14 +10,9 @@ import com.example.storeeverything.repositories.database.CategoriesEntityReposit
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
 import com.example.storeeverything.repositories.database.UsersEntityRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.sql.Date;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Service
@@ -54,10 +49,10 @@ public class dbService {
         categoriesEntityRepository.save(ent);
     }
 
-    public void addNewUser(User user) {
-        UsersEntity ent = new UsersEntity();
-        usersEntityRepository.save(ent);
-    }
+//    public void addNewUser(User user) {
+//        UsersEntity ent = new UsersEntity();
+//        usersEntityRepository.save(ent);
+//    }
 
     public UsersEntity findUsername(String username) {
         return usersEntityRepository.findByUsername(username);
