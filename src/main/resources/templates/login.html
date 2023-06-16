@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <link rel="stylesheet" th:href="@{/styles/text.css}">
     <meta charset="UTF-8">
@@ -7,21 +8,33 @@
 </head>
 <body>
 
-<div class="form">
-    <div class="form-main">
-        <form action="#" method="POST">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password">
-            </div>
-            <button class="btn" type="submit" class="btn-login">Login</button>
-        </form>
+    <div th:if="${param.error}">
+        Invalid username and password.
     </div>
-</div>
+
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+
+    <div class="form">
+        <div class="form-main">
+
+            <form th:action="@{/login}" method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control"
+                           name="username" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control"
+                           name="password" id="password">
+                </div>
+                <button class="btn" type="submit" class="btn-login">Sign in</button>
+            </form>
+
+        </div>
+    </div>
 
 </body>
 </html>

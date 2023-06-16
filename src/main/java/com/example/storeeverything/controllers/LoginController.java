@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/auth")
+//@RequestMapping("/auth")
 public class LoginController {
 
 //    @Autowired
-    BCryptPasswordEncoder bCryptpasswordEncoder;
+//    BCryptPasswordEncoder bCryptpasswordEncoder;
 
-    @GetMapping ("/login")
+    @GetMapping("/login")
     public String login(){
         return "login";
     }
@@ -25,7 +25,7 @@ public class LoginController {
     @GetMapping ("/register")
     public String register(@RequestParam String username, @RequestParam String password){
         System.out.println("Register data " + username + " " + password);
-        System.out.println("Encrypted password " + bCryptpasswordEncoder.encode(password) );
+//        System.out.println("Encrypted password " + bCryptpasswordEncoder.encode(password) );
         return "login";
     }
 }

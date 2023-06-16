@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <link rel="stylesheet" th:href="@{/styles/text.css}">
     <meta charset="UTF-8">
@@ -12,7 +13,9 @@
 
             <div class="forms-index-container">
                 <form class="form-index-item" th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
-                    <h2>Notes</h2>
+                    <h2 sec:authorize="isAuthenticated()">
+                        Welcome to Notes <span sec:authentication="name"></span>
+                    </h2>
                     <label th:for="value">Posortuj po</label>
                     <select th:field="*{value} ">
                         <option th:text="alfabetycznie" th:value="alf"></option>

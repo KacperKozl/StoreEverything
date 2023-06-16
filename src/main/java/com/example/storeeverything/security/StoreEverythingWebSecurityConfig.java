@@ -1,4 +1,4 @@
-package com.example.storeeverything;
+package com.example.storeeverything.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +15,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 //abstract
-class StoreEverythingSecurityConfiguration {
+class StoreEverythingWebSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         int rounds = 10;
         return new BCryptPasswordEncoder(rounds);
+//        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean
@@ -51,7 +52,7 @@ class StoreEverythingSecurityConfiguration {
         System.out.println(admin.getUsername()+"" + admin.getPassword()+
                 "" +admin.getAuthorities());
 
-        return new InMemoryUserDetailsManager(user, admin);
+        return new InMemoryUserDetailsManager(user, weak_user, admin);
     }
 
     @Bean
@@ -59,12 +60,12 @@ class StoreEverythingSecurityConfiguration {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/").permitAll() // access to all users
+                        .requestMatchers("/items/category/*").hasRole("ADMIN") // only admin
                         .anyRequest().authenticated() // access to the rest of the resources regardless of the role
                 )
                 .formLogin((form) -> form //redirect to the login page regardless of the string
                         .loginPage("/login")
                         .permitAll()
-
                 )
                 .logout((logout) -> logout.logoutSuccessUrl("/").permitAll());
 

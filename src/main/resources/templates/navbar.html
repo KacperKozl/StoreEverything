@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head th:fragment="navbars">
     <meta charset="UTF-8">
     <title>NavigationBar</title>
@@ -7,11 +8,21 @@
 <body>
     <nav class="nav-bar" th:fragment="basic">
         <h1 class="logo">StoreEverything</h1>
-       <ul class="nav-bar-links">
+        <ul class="nav-bar-links">
            <li><a th:href="@{/items/}">Notes</a></li>
            <li><a th:href="@{/items/add}">Add Note</a></li>
            <li><a th:href="@{/items/category/add}">Add Category</a></li>
-       </ul>
+           <li sec:authorize="isAuthenticated()">
+               <form th:action="@{/logout}" method="POST">
+                   <input type="submit" value="Sign out">
+                </form>
+           </li>
+           <li sec:authorize="!isAuthenticated()">
+               <form th:action="@{/login}" method="POST">
+                   <input type="submit" value="Sing in">
+               </form>
+           </li>
+        </ul>
     </nav>
 </body>
 </html>
