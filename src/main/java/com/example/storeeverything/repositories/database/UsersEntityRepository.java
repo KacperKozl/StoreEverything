@@ -6,12 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface UsersEntityRepository extends JpaRepository<UsersEntity, Integer> {
+public interface UsersEntityRepository extends JpaRepository<UsersEntity, String> {
     @Override
     List<UsersEntity> findAll();
 
-    @Override
-    Optional<UsersEntity> findById(Integer id);
 
-//    UsersEntity findByUsername(String username);
+    UsersEntity findByUsername(String username);
 }

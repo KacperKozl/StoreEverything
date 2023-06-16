@@ -34,4 +34,10 @@ public class UsersEntity {
     public Integer getId(){
         return userId;
     }
+//    public Object getUsername(){
+//        return getUsername();
+//    }
+//    public Object getPassword(){
+//        return password;
+//    }
 }
