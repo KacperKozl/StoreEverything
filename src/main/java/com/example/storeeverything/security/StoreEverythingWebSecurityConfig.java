@@ -16,12 +16,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 //abstract
 class StoreEverythingWebSecurityConfig {
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        int rounds = 10;
-        return new BCryptPasswordEncoder(rounds);
-//        return NoOpPasswordEncoder.getInstance();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        int rounds = 10;
+//        return new BCryptPasswordEncoder(rounds);
+////        return NoOpPasswordEncoder.getInstance();
+//    }
 
     @Bean
     public UserDetailsService userDetailsService() {

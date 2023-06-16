@@ -30,4 +30,8 @@ public class UsersEntity {
     @Basic
     @Column(name = "ROLE_ID", nullable = true)
     private Integer roleId;
+
+    public Integer getId(){
+        return userId;
+    }
 }

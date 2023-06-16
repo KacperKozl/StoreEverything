@@ -2,10 +2,13 @@ package com.example.storeeverything.services;
 
 import com.example.storeeverything.data.Category;
 import com.example.storeeverything.data.Note;
+import com.example.storeeverything.data.User;
 import com.example.storeeverything.data.database.CategoriesEntity;
 import com.example.storeeverything.data.database.NotesEntity;
+import com.example.storeeverything.data.database.UsersEntity;
 import com.example.storeeverything.repositories.database.CategoriesEntityRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
+import com.example.storeeverything.repositories.database.UsersEntityRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Null;
 import lombok.Getter;
@@ -25,6 +28,9 @@ public class dbService {
     CategoriesEntityRepository categoriesEntityRepository;
     @Autowired
     NotesEntityRepository notesEntityRepository;
+    @Autowired
+    UsersEntityRepository usersEntityRepository;
+
     public NotesEntity convertNote(Note newNote){
         NotesEntity ent=new NotesEntity();
         ent.setId(newNote.getId());
@@ -46,6 +52,11 @@ public class dbService {
         CategoriesEntity ent=new CategoriesEntity();
         ent.setCategoryName(category.getName());
         categoriesEntityRepository.save(ent);
+    }
+
+    public void addNewUser(User user) {
+        UsersEntity ent = new UsersEntity();
+        usersEntityRepository.save(ent);
     }
     public CategoriesEntity findCategory(String name){
         return categoriesEntityRepository.findByCategoryName(name);
