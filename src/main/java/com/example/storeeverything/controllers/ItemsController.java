@@ -40,6 +40,8 @@ public class ItemsController {
         if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByAddDateDesc());
         if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByReminderDateAsc());
         if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByReminderDateDesc());
+        if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==1) model.addAttribute("notes", service.getNotesEntityRepository().sortByPopularCategoriesAsc());
+        if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes", service.getNotesEntityRepository().sortByPopularCategoriesDesc());
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
