@@ -7,7 +7,9 @@ import com.example.storeeverything.data.SortIndex;
 import com.example.storeeverything.data.database.NotesEntity;
 import com.example.storeeverything.repositories.ItemRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
+import com.example.storeeverything.services.crypto;
 import com.example.storeeverything.services.dbService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 @RequestMapping("/items")
@@ -23,6 +30,7 @@ public class ItemsController {
     dbService service;
     @Autowired
     private NotesEntityRepository notesEntityRepository;
+    crypto crpt =new crypto();
 
     @GetMapping("/")
     public String start(Model model){
@@ -109,6 +117,32 @@ public class ItemsController {
     @PostMapping("/delete")
     public String deleteNote(Model model, @ModelAttribute("indeks") Indeks indeks){
         service.getNotesEntityRepository().deleteById(indeks.getValue());
+        return "redirect:/items/";
+    }
+    @RequestMapping("/shared/{id}")
+    public String showSharedNote(Model model, @PathVariable("id") String code){
+        String decoded= URLDecoder.decode(code);
+        String decrypted="";
+        try{
+            System.out.println(decoded);
+        decrypted=crpt.decrypt(code);
+        System.out.println(decrypted);
+        }
+        catch (Exception e){ System.out.println(e.getMessage());}
+        NotesEntity notatka=service.getNotesEntityRepository().findById((Integer) Integer.parseInt(decrypted)).get();
+        model.addAttribute("note",notatka);
+        return "shared_link";
+    }
+    @PostMapping("/shareto")
+    public String shareNoteTo(HttpServletRequest request, Model model, @ModelAttribute("indeks") Indeks indeks){
+        String URL = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
+        try{
+        URL=URL+"/items/shared/"+URLEncoder.encode(crpt.encrypt(indeks.getValue().toString()));
+            System.out.println(crpt.encrypt(indeks.toString()));
+        }
+        catch (Exception e) {System.out.println(e.getMessage());}
+        System.out.println(URL);
+        model.addAttribute("URL",URL);
         return "redirect:/items/";
     }
 }

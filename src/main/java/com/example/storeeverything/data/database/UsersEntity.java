@@ -14,20 +14,24 @@ public class UsersEntity {
     private int userId;
     @Basic
     @Column(name = "NAME", nullable = true, length = 20)
-    private Object name;
+    private String name;
     @Basic
     @Column(name = "SURNAME", nullable = true, length = 50)
-    private Object surname;
+    private String surname;
     @Basic
     @Column(name = "LOGIN", nullable = true, length = 20)
-    private Object login;
+    private String login;
     @Basic
     @Column(name = "PASSWORD", nullable = true, length = 50)
-    private Object password;
+    private String password;
     @Basic
     @Column(name = "AGE", nullable = true)
     private Integer age;
     @Basic
-    @Column(name = "ROLE_ID", nullable = true)
+    @Column(name = "ROLE_ID", nullable = true,insertable=false, updatable=false)
     private Integer roleId;
+    @ManyToOne
+    @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
+    private RolesEntity roleName;
+
 }

@@ -42,18 +42,15 @@ public class NotesEntity {
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID")
     private CategoriesEntity categoryName;
-    @Basic
-    @Column(name = "IS_PUBLIC", nullable = true)
-    private Boolean isPublic;
     public Integer getId(){
         return id;
     }
-//    @Basic
-//    @Column(name = "USER_ID", nullable = true,insertable=false, updatable=false)
-//    private Integer userId;
-//    @ManyToOne
-//    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
-//    private UsersEntity usersByUserId;
+    @Basic
+    @Column(name = "USER_ID", nullable = true,insertable=false, updatable=false)
+    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    private UsersEntity usersByUserId;
     public String getAdd(){
         return new SimpleDateFormat("dd-MM-yyyy").format(addDate);
     }

@@ -14,5 +14,6 @@ public class RolesEntity {
     private int roleId;
     @Basic
     @Column(name = "ROLE_NAME", nullable = true, length = 7)
-    private Object roleName;
+    private String roleName;
+
 }

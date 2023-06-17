@@ -57,6 +57,10 @@
                             <input type="hidden" th:value="${note.id}" name="value"/>
                             <button class="btn" name="submit" type="submit">Delete</button>
                         </form>
+                    <form action="#" th:action="@{/items/shareto}" th:object="${indeks}" method="POST">
+                        <input type="hidden" th:value="${note.id}" name="value"/>
+                        <button class="btn" name="submit" type="submit">Share</button>
+                    </form>
                     </div>
                     </p>
                 </div>

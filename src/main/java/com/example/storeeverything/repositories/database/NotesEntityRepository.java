@@ -19,7 +19,7 @@ public interface NotesEntityRepository extends JpaRepository<NotesEntity, Intege
     @Modifying
     @Query("""
             update NotesEntity n set n.title = ?1
-            where n.title = ?2 and n.content = ?3 and n.reminderDate = ?4 and n.categoryName = ?5 and n.isPublic = ?6""")
+            where n.title = ?2 and n.content = ?3 and n.reminderDate = ?4 and n.categoryName = ?5""")
     
     NotesEntity findByCategoryName_CategoryName(String categoryName);
     List<NotesEntity> findAllByOrderByTitleAsc();
