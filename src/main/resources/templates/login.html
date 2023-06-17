@@ -1,27 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 <head>
-    <link rel="stylesheet" th:href="@{/styles/text.css}">
+    <link rel="stylesheet" th:href="@{/styles/text.css}" />
     <meta charset="UTF-8">
     <title>Login Page</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
+            rel="stylesheet">
 </head>
+
 <body>
+    <div class="container">
+        <div class="form">
+            <div class="form-main">
+                <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="POST">
+                    <div class="form">
+                    <h1>Login</h1>
+                    <div class="form-group">
+                        <label for="username">Username <i class="fa-solid fa-user"></i></label>
+                        <input type="text" class="form-control"
+                               name="username" id="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password <i class="fa-solid fa-lock"></i></label>
+                        <input type="password" class="form-control"
+                               name="password" id="password" placeholder="Password">
+                    </div>
+                    <div class="message" th:if="${param.error}">
+                        Invalid username and password!
+                    </div>
 
-<div class="form">
-    <div class="form-main">
-        <form action="#" method="POST">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email">
+                    <div class="message" th:if="${param.logout}">
+                        You have been logged out!
+                    </div>
+
+                    <button class="btn" type="submit">Sign in</button>
+
+                        <br>
+                        <div class="message">
+                            Don't have account yet?
+                        </div>
+                        <button class="btn" type="submit">Sign up</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password">
+            <div sec:authorize="isAuthenticated()">
+                You have been logged in already!
             </div>
-            <button class="btn" type="submit" class="btn-login">Login</button>
-        </form>
+        </div>
     </div>
-</div>
 
+    <script src="https://kit.fontawesome.com/a4ec9618cd.js" crossorigin="anonymous"></script>
 </body>
 </html>

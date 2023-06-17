@@ -1,17 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head th:fragment="navbars">
     <meta charset="UTF-8">
     <title>NavigationBar</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
+            rel="stylesheet">
 </head>
 <body>
     <nav class="nav-bar" th:fragment="basic">
         <h1 class="logo">StoreEverything</h1>
-       <ul class="nav-bar-links">
-           <li><a th:href="@{/items/}">Notes</a></li>
-           <li><a th:href="@{/items/add}">Add Note</a></li>
-           <li><a th:href="@{/items/category/add}">Add Category</a></li>
-       </ul>
+        <ul class="nav-bar-links">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a sec:authorize-url="/items" th:href="@{/items/}">Notes</a></li>
+            <li><a sec:authorize="hasRole('ROLE_USER')" th:href="@{/items/add}">Add Note</a></li>
+            <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/users}">Manage user</a></li>
+            <li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/items/category/add}">Add Category</a></li>
+            <li><a sec:authorize="isAuthenticated()">
+               <form name="navbar-form" th:action="@{/logout}" method="POST">
+                   <input type="submit" value="Sign out">
+               </form></a>
+            </li>
+            <li><a sec:authorize="!isAuthenticated()">
+               <form name="navbar-form" th:action="@{/login}" method="POST">
+                   <input type="submit" value="Sign in">
+               </form></a>
+            </li>
+        </ul>
     </nav>
 </body>
 </html>

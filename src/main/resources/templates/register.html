@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <link rel="stylesheet" th:href="@{/styles/text.css}">
+  <meta charset="UTF-8">
+  <title>Register Page</title>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+
+<div th:if="${param.error}">
+  Invalid credentials.
+</div>
+
+
+<div class="form">
+  <div class="form-main">
+
+    <form th:action="@{/register}" method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control"
+               name="username" id="username">
+      </div>
+
+      <div class="form-group">
+        <label for="username">Surname</label>
+        <input type="text" class="form-control"
+               name="surname" id="surname">
+      </div>
+
+      <div class="form-group">
+        <label for="username">Login</label>
+        <input type="text" class="form-control"
+               name="login" id="login">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control"
+               name="password" id="password">
+      </div>
+      <button class="btn" type="submit" class="btn-login">Sign up</button>
+    </form>
+
+  </div>
+</div>
+
+</body>
+</html>

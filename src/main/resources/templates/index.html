@@ -1,58 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <link rel="stylesheet" th:href="@{/styles/text.css}">
     <meta charset="UTF-8">
     <title>Title</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
+            rel="stylesheet">
 </head>
 <body>
 <header th:insert="navbar.html :: basic"> </header>
 <div class="container">
-
         <div class="items-main">
-            <form class="form" th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
-                <h2>Notes</h2>
-                <label th:for="value">Posortuj po</label>
-                <select th:field="*{value} ">
-                    <option th:text="alfabetycznie" th:value="alf"></option>
-                    <option th:text="data_dodania" th:value="A_date"></option>
-                    <option th:text="kategoria" th:value="cat"></option>
-                    <option th:text="data_przypomnienia" th:value="R_date"></option>
+
+            <div class="forms-index-container">
+                <form class="form-index-item" th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
+                    <h2 sec:authorize="isAuthenticated()">
+                      Logged as:  <span sec:authentication="name"></span>
+                    </h2>
+                    <label th:for="value">Posortuj po</label>
+                    <select th:field="*{value} ">
+                        <option th:text="alfabetycznie" th:value="alf"></option>
+                        <option th:text="data_dodania" th:value="A_date"></option>
+                        <option th:text="kategoria" th:value="cat"></option>
+                        <option th:text="popularne_kategorie" th:value="pop_cat"></option>
+                        <option th:text="data_przypomnienia" th:value="R_date"></option>
+                    </select>
+                    <label th:for="direction">Kolejność:</label>
+                    <select th:field="*{direction}">
+                        <option th:text="asc" th:value=1></option>
+                        <option th:text="desc" th:value=-1></option>
+                    </select>
+                    <button class="btn" name="submit" type="submit" value="0">Wyszukaj</button>
+                </form>
+
+                <form class="form-search" action="#" th:action="@{/items/filterbycategory}" th:object="${category}" method="POST">
+                    <label th:for="name">Wybierz kategorię</label>
+                <select th:field="*{name}">
+                    <option th:each="option : ${category_list}" th:value="${option.categoryName}" th:text="${option.categoryName}"></option>
                 </select>
-                <label th:for="direction">Kolejność:</label>
-                <select th:field="*{direction}">
-                    <option th:text="asc" th:value=1></option>
-                    <option th:text="desc" th:value=-1></option>
-                </select>
-                <button class="btn" name="submit" type="submit" value="0">Wyszukaj</button>
-            </form>
+                    <button class="btn" name="submit" type="submit" value="0">Wyszukaj</button>
+                </form>
+            </div>
 
-            <form class="form" action="#" th:action="@{/items/filterbycategory}" th:object="${category}" method="POST">
-                <label th:for="name">Wybierz kategorię</label>
-            <select th:field="*{name}">
-                <option th:each="option : ${category_list}" th:value="${option.categoryName}" th:text="${option.categoryName}"></option>
-            </select>
-                <button class="btn" name="submit" type="submit" value="0">Wyszukaj</button>
-            </form>
+            <div class="notes-box">
+                <ol th:each="note:${notes}">
+                    <div class="notes-box-item">
+                        <p class="textbox2">
+                        <span class="textbox1" th:text="${note.title}"/>
+                            <span class="textbox1" th:text="${note.categoryName.categoryName}"/>
+                        <span class="textbox1" th:text="${note.content}"/>
+                        <a class="textbox1" th:href="@{http://{link}(link=${note.link})}" th:text="${note.link}"/>
+                        <span class="textbox1" th:text="${note.getAdd}"/>
+                        <span class="textbox1" th:text="${note.getReminder}"/>
 
-
-        <div class="notes-box">
-            <ol th:each="note:${notes}">
-                <div class="notes-box-item">
-                    <p class="textbox2">
-                    <span class="textbox1" th:text="${note.title}"/>
-                        <span class="textbox1" th:text="${note.categoryName.categoryName}"/>
-                    <span class="textbox1" th:text="${note.content}"/>
-                    <a class="textbox1" th:href="@{http://{link}(link=${note.link})}" th:text="${note.link}"/>
-                    <span class="textbox1" th:text="${note.getAdd}"/>
-                    <span class="textbox1" th:text="${note.getReminder}"/>
-
-                    <div class="notes-box-item-buttons">
-                        <form action="#" th:action="@{/items/edit/init}" th:object="${indeks}" method="POST">
-                            <input type="hidden" th:value="${note.id}" name="value"/>
-                            <button class="btn" name="submit" type="submit">Edit</button>
-                        </form>
-
+                        <div class="notes-box-item-buttons">
+                            <form action="#" th:action="@{/items/edit/init}" th:object="${indeks}" method="POST">
+                                <input type="hidden" th:value="${note.id}" name="value"/>
+                                <button class="btn" name="submit" type="submit">Edit</button>
+                            </form>
                         <form action="#" th:action="@{/items/delete}" th:object="${indeks}" method="POST">
                             <input type="hidden" th:value="${note.id}" name="value"/>
                             <button class="btn" name="submit" type="submit">Delete</button>
@@ -62,12 +69,11 @@
                         <button class="btn" name="submit" type="submit">Share</button>
                     </form>
                     </div>
-                    </p>
-                </div>
-            </ol>
+                    </div>
+                </ol>
+            </div>
         </div>
 
-    </div>
 </div>
 </body>
 </html>

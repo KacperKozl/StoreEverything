@@ -1,9 +1,6 @@
 package com.example.storeeverything.controllers;
 
-import com.example.storeeverything.data.Category;
-import com.example.storeeverything.data.Indeks;
-import com.example.storeeverything.data.Note;
-import com.example.storeeverything.data.SortIndex;
+import com.example.storeeverything.data.*;
 import com.example.storeeverything.data.database.NotesEntity;
 import com.example.storeeverything.repositories.ItemRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
@@ -51,6 +48,8 @@ public class ItemsController {
         if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByAddDateDesc());
         if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByReminderDateAsc());
         if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByReminderDateDesc());
+        if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==1) model.addAttribute("notes", service.getNotesEntityRepository().sortByPopularCategoriesAsc());
+        if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes", service.getNotesEntityRepository().sortByPopularCategoriesDesc());
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
@@ -94,6 +93,7 @@ public class ItemsController {
         service.addNewCategory(newCategory);
         return "redirect:/items/";
     }
+
     @PostMapping("/edit/init")
     public String editNote(Model model, @ModelAttribute("indeks") Indeks indeks){
         NotesEntity note=service.getNotesEntityRepository().findById(indeks.getValue()).get();
