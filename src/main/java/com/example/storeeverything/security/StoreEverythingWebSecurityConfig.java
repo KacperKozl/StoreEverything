@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class StoreEverythingWebSecurityConfig {
                         .requestMatchers("/styles/**").permitAll()
                         .requestMatchers("/").permitAll() // access to all users
                         .requestMatchers("/items/category/*").hasRole("ADMIN") // only admin
+                        .requestMatchers("/items/shared/{id}").permitAll()
                         .anyRequest().authenticated() // access to the rest of the resources regardless of the role
                 )
                 .formLogin((form) -> form //redirect to the login page regardless of the string
@@ -77,6 +80,7 @@ public class StoreEverythingWebSecurityConfig {
 
         return http.build();
     }
+<<<<<<< HEAD
 
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService customUserDetailsService) {
@@ -87,5 +91,22 @@ public class StoreEverythingWebSecurityConfig {
 
         return new ProviderManager(providers);
     }
+=======
+    @Bean
+    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowUrlEncodedSlash(true);
+        return firewall;
+    }
+//    @Bean
+//    public AuthenticationManager authenticationManager(UserDetailsService customUserDetailsService) {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(customUserDetailsService);
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//        List<AuthenticationProvider> providers = List.of(authProvider);
+//
+//        return new ProviderManager(providers);
+//    }
+>>>>>>> 15a05e8d650d66b8c54294eeeadcc4ab007c0579
 
 }
