@@ -9,5 +9,5 @@ public interface UsersEntityRepository extends JpaRepository<UsersEntity, String
     @Override
     List<UsersEntity> findAll();
 
-    UsersEntity findByUsername(String username);
+    UsersEntity findByLogin(String username);
 }

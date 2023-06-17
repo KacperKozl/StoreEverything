@@ -54,10 +54,6 @@ public class dbService {
 //        usersEntityRepository.save(ent);
 //    }
 
-    public UsersEntity findUsername(String username) {
-        return usersEntityRepository.findByUsername(username);
-    }
-
     public CategoriesEntity findCategory(String name){
         return categoriesEntityRepository.findByCategoryName(name);
     }

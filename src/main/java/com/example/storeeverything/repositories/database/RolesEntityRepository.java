@@ -1,4 +1,7 @@
 package com.example.storeeverything.repositories.database;
 
-public interface RolesEntityRepository extends org.springframework.data.jpa.repository.JpaRepository<com.example.storeeverything.data.database.RolesEntity, int> {
+import com.example.storeeverything.data.database.RolesEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RolesEntityRepository extends JpaRepository<RolesEntity, Integer> {
 }
