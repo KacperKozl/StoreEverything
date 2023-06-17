@@ -34,10 +34,8 @@ public class UsersAuthDBService implements UserDetailsService {
         if (user == null)
             throw new UsernameNotFoundException("User " + username + " not found.");
         else {
-            LinkedList l=new LinkedList<SimpleGrantedAuthority>();
-            l.add(user.getRoleName().getRoleName());
             UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                            user.getName(),
+                            user.getLogin(),
                             user.getPassword(),
                             user.getRoles()
             );

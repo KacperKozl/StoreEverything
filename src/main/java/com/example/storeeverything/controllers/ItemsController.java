@@ -2,8 +2,12 @@ package com.example.storeeverything.controllers;
 
 import com.example.storeeverything.data.*;
 import com.example.storeeverything.data.database.NotesEntity;
+import com.example.storeeverything.data.database.SharedEntity;
+import com.example.storeeverything.data.database.UsersEntity;
 import com.example.storeeverything.repositories.ItemRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
+import com.example.storeeverything.repositories.database.SharedEntityRepository;
+import com.example.storeeverything.repositories.database.UsersEntityRepository;
 import com.example.storeeverything.services.crypto;
 import com.example.storeeverything.services.dbService;
 import jakarta.servlet.http.Cookie;
@@ -12,6 +16,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +28,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/items")
@@ -30,6 +39,10 @@ public class ItemsController {
     @Autowired
     private NotesEntityRepository notesEntityRepository;
     crypto crpt =new crypto();
+    @Autowired
+    private UsersEntityRepository usersEntityRepository;
+    @Autowired
+    private SharedEntityRepository sharedEntityRepository;
 
     @GetMapping("/")
     public String start(Model model){
@@ -135,6 +148,7 @@ public class ItemsController {
     }
     @PostMapping("/delete")
     public String deleteNote(Model model, @ModelAttribute("indeks") Indeks indeks){
+        sharedEntityRepository.deleteByNoteId(indeks.getValue());
         service.getNotesEntityRepository().deleteById(indeks.getValue());
         return "redirect:/items/";
     }
@@ -154,14 +168,39 @@ public class ItemsController {
     }
     @PostMapping("/shareto")
     public String shareNoteTo(HttpServletRequest request, Model model, @ModelAttribute("indeks") Indeks indeks){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
         String URL = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(null).build().toUriString();
         try{
         URL=URL+"/items/shared/"+URLEncoder.encode(crpt.encrypt(indeks.getValue().toString()));
             System.out.println(crpt.encrypt(indeks.toString()));
         }
         catch (Exception e) {System.out.println(e.getMessage());}
-        System.out.println(URL);
+        System.out.println(indeks.getValue());
+        ShareInd share=new ShareInd();
+        share.setNoteID(indeks.getValue());
+        model.addAttribute("ind",share);
         model.addAttribute("URL",URL);
+        model.addAttribute("users_list", usersEntityRepository.findByRoleName_RoleNameNotAndUserIdNot("admin",service.getUsersEntityRepository().findByLogin(login).getUserId()));
+        return "share_to";
+    }
+    @PostMapping("/shareto/chosen")
+    public String dbShare(HttpServletRequest request, Model model, @ModelAttribute("ind") ShareInd ind){
+        if(service.getSharedEntityRepository().findByUser_UserIdAndNoteId(ind.getUserID(),ind.getNoteID()).isEmpty()){
+        UsersEntity user=service.getUsersEntityRepository().findByUserId(ind.getUserID());
+        NotesEntity note=service.getNotesEntityRepository().findById(ind.getNoteID()).get();
+        SharedEntity share=new SharedEntity();
+        share.setNote(note);
+        share.setUser(user);
+        service.getSharedEntityRepository().save(share);}
         return "redirect:/items/";
+    }
+    @RequestMapping("/shareto/mine")
+    public String showSharedToMe(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        List<NotesEntity> list=service.getSharedEntityRepository().findByUser_Login(login).stream().map(SharedEntity::getNote).collect(Collectors.toList());
+        model.addAttribute("notes",list);
+        return "shared_mine";
     }
 }

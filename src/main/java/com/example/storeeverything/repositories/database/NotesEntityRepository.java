@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface NotesEntityRepository extends JpaRepository<NotesEntity, Integer> {
-    NotesEntity findFirstByIdOrderByCategoryName_CategoryNameAsc(Integer id);
     @Transactional
     @Modifying
     @Query("""

@@ -15,6 +15,7 @@
             <li><a th:href="@{/}">Home</a></li>
             <li><a sec:authorize-url="/items" th:href="@{/items/}">Notes</a></li>
             <li><a sec:authorize="hasAuthority('full')" th:href="@{/items/add}">Add Note</a></li>
+            <li><a sec:authorize="hasAnyAuthority('full','limited')" th:href="@{/items/shareto/mine}">Shared by Others</a></li>
             <li><a sec:authorize="hasAuthority('admin')" th:href="@{/users}">Manage user</a></li>
             <li><a sec:authorize="hasAuthority('full')" th:href="@{/items/category/add}">Add Category</a></li>
             <li><a sec:authorize="isAuthenticated()">

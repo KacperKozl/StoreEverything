@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/styles/text.css}">
+    <meta charset="UTF-8">
+    <title>Edytuj Notatkę</title>
+</head>
+<body>
+<header th:insert="navbar.html :: basic"> </header>
+<div class="notes-box">
+    <ol th:each="note:${notes}">
+        <div class="notes-box-item">
+            <p class="textbox2">
+                <span class="textbox1" th:text="${note.title}"/>
+                <span class="textbox1" th:text="${note.categoryName.categoryName}"/>
+                <span class="textbox1" th:text="${note.content}"/>
+                <a class="textbox1" th:href="@{http://{link}(link=${note.link})}" th:text="${note.link}"/>
+                <span class="textbox1" th:text="${note.getAdd}"/>
+                <span class="textbox1" th:text="${note.getReminder}"/>
+        </div>
+    </ol>
+</div>
+</body>
+</html>

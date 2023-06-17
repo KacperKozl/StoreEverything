@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/styles/text.css}">
+    <meta charset="UTF-8">
+    <title>Edytuj Notatkę</title>
+</head>
+<body>
+<header th:insert="navbar.html :: basic"> </header>
+<div class="textbox2" style="position: relative;top:80px"> <div class="textbox1" th:text="${URL}"/></div>
+<div class="notes-box-item" style="position: relative;top:80px">
+    <ol th:each="user:${users_list}">
+        <div class="notes-box-item">
+            <p class="textbox2">
+                <span class="textbox1" th:text="${user.getLogin()}"/>
+                <span class="textbox1" th:text="${user.getName()}"/>
+                <span class="textbox1" th:text="${user.getSurname()}"/>
+            <div class="notes-box-item-buttons">
+                <form action="#" th:action="@{/items/shareto/chosen}" th:object="${ind}" method="POST">
+                    <input type="hidden" th:value="${ind.getNoteID()}" name="noteID"/>
+                    <input type="hidden" th:value="${user.getUserId()}" name="userID"/>
+                    <button class="btn" name="submit" type="submit">share</button>
+                </form>
+            </div>
+
+        </div>
+    </ol>
+</div>
+</body>
+</html>

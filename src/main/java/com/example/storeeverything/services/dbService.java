@@ -5,9 +5,11 @@ import com.example.storeeverything.data.Note;
 import com.example.storeeverything.data.User;
 import com.example.storeeverything.data.database.CategoriesEntity;
 import com.example.storeeverything.data.database.NotesEntity;
+import com.example.storeeverything.data.database.SharedEntity;
 import com.example.storeeverything.data.database.UsersEntity;
 import com.example.storeeverything.repositories.database.CategoriesEntityRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
+import com.example.storeeverything.repositories.database.SharedEntityRepository;
 import com.example.storeeverything.repositories.database.UsersEntityRepository;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
@@ -28,6 +30,8 @@ public class dbService {
     NotesEntityRepository notesEntityRepository;
     @Autowired
     UsersEntityRepository usersEntityRepository;
+    @Autowired
+    SharedEntityRepository sharedEntityRepository;
 
     public NotesEntity convertNote(Note newNote){
         NotesEntity ent=new NotesEntity();
