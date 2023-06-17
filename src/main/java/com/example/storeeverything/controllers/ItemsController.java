@@ -6,7 +6,9 @@ import com.example.storeeverything.repositories.ItemRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
 import com.example.storeeverything.services.crypto;
 import com.example.storeeverything.services.dbService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class ItemsController {
         return "index";
     }
     @RequestMapping("/sortby")
-    public String showItems(SortIndex sortIndex, Model model){
+    public String showItems(SortIndex sortIndex, Model model, HttpServletResponse response){
         if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByTitleAsc());
         if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByTitleDesc());
         if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByCategoryName_CategoryNameAsc());
@@ -53,6 +55,15 @@ public class ItemsController {
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+
+        // Tworzenie ciasteczka
+        Cookie sortCookie = new Cookie("sort.last", sortIndex.getValue() + "-" + sortIndex.getDirection());
+        sortCookie.setMaxAge(3600); // Ustawienie czasu życia ciasteczka (np. 1 godzina)
+        sortCookie.setPath("/"); // Ustawienie ścieżki, na której będzie dostępne ciasteczko
+
+        // Ustawienie ciasteczka w odpowiedzi
+        response.addCookie(sortCookie);
+
         return "index";
     }
 
@@ -73,11 +84,19 @@ public class ItemsController {
         return "redirect:/items/";
     }
     @PostMapping("/filterbycategory")
-    public String filterByCategory(Category e,Model model){
+    public String filterByCategory(Category e,Model model, HttpServletResponse response){
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
         model.addAttribute("notes", notesEntityRepository.findByCategoryName_CategoryName(e.getName()));
+
+        Cookie categoryCookie = new Cookie("category.last", e.getName());
+        categoryCookie.setMaxAge(3600); // Ustawienie czasu życia ciasteczka (np. 1 godzina)
+        categoryCookie.setPath("/"); // Ustawienie ścieżki, na której będzie dostępne ciasteczko
+
+        // Ustawienie ciasteczka w odpowiedzi
+        response.addCookie(categoryCookie);
+
         return "index";
     }
     @GetMapping("/category/add")

@@ -20,8 +20,8 @@ public interface NotesEntityRepository extends JpaRepository<NotesEntity, Intege
     @Query("""
             update NotesEntity n set n.title = ?1
             where n.title = ?2 and n.content = ?3 and n.reminderDate = ?4 and n.categoryName = ?5""")
-    
-    NotesEntity findByCategoryName_CategoryName(String categoryName);
+
+    List<NotesEntity> findByCategoryName_CategoryName(String categoryName); //
     List<NotesEntity> findAllByOrderByTitleAsc();
     List<NotesEntity> findAllByOrderByTitleDesc();
     List<NotesEntity> findAllByOrderByCategoryName_CategoryNameAsc();
@@ -31,10 +31,23 @@ public interface NotesEntityRepository extends JpaRepository<NotesEntity, Intege
     List<NotesEntity> findAllByOrderByReminderDateAsc();
     List<NotesEntity> findAllByOrderByReminderDateDesc();
 
-    @Query("SELECT n FROM NotesEntity n LEFT JOIN n.categoryName c GROUP BY c, n.id ORDER BY COUNT(n.id) ASC")
+    /*@Query("""
+        select n from NotesEntity n
+        where n.categoryName.categoryName = ?1
+        order by n.title asc""")
+    List<NotesEntity> findByCategoryName_CategoryName(String categoryName);*/
+    @Query("""
+            select n from NotesEntity n
+            join n.categoryName c
+            group by c.categoryName
+            order by count(n) asc""")
     List<NotesEntity> sortByPopularCategoriesAsc();
 
-    @Query("SELECT n FROM NotesEntity n LEFT JOIN n.categoryName c GROUP BY c, n.id ORDER BY COUNT(n.id) DESC")
+    @Query("""
+            select n from NotesEntity n
+            join n.categoryName c
+            group by c.categoryName
+            order by count(n) desc""")
     List<NotesEntity> sortByPopularCategoriesDesc();
 
     @Override
