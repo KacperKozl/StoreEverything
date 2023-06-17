@@ -31,6 +31,7 @@ public interface NotesEntityRepository extends JpaRepository<NotesEntity, Intege
     List<NotesEntity> findByUser_LoginOrderByReminderDateAsc(String login);
     List<NotesEntity> findByUser_LoginOrderByReminderDateDesc(String login);
     List<NotesEntity> findByUser_Login(String login);
+    List<NotesEntity> findByUser_LoginAndReminderDate(String login,Date date);
 
     /*@Query("""
         select n from NotesEntity n

@@ -28,6 +28,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +55,15 @@ public class ItemsController {
         model.addAttribute("category",new Category("a"));
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
         return "index";
+    }
+    @RequestMapping("/today")
+    public String today(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        List<NotesEntity> list=service.getNotesEntityRepository().findByUser_LoginAndReminderDate(login,new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+        if(list.isEmpty()) return "redirect:/";
+        model.addAttribute("notes",list);
+        return "today";
     }
     @RequestMapping("/sortby")
     public String showItems(SortIndex sortIndex, Model model, HttpServletResponse response){
@@ -145,6 +155,9 @@ public class ItemsController {
     @PostMapping("/edit")
     public String editNote(@Valid @ModelAttribute("newNote") Note newNote, BindingResult result, Model model){
         NotesEntity note=service.convertNote(newNote);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        note.setUser(service.getUsersEntityRepository().findByLogin(login));
         if(result.hasErrors()){
             System.out.println(result.getAllErrors());
             model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
