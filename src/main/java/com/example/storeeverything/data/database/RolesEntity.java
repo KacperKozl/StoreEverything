@@ -16,4 +16,7 @@ public class RolesEntity {
     @Column(name = "ROLE_NAME", nullable = true, length = 7)
     private String roleName;
 
+    public String getRole() {
+        return roleName;
+    }
 }

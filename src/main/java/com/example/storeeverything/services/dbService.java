@@ -13,7 +13,10 @@ import jakarta.transaction.Transactional;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Getter
@@ -48,11 +51,6 @@ public class dbService {
         ent.setCategoryName(category.getName());
         categoriesEntityRepository.save(ent);
     }
-
-//    public void addNewUser(User user) {
-//        UsersEntity ent = new UsersEntity();
-//        usersEntityRepository.save(ent);
-//    }
 
     public CategoriesEntity findCategory(String name){
         return categoriesEntityRepository.findByCategoryName(name);

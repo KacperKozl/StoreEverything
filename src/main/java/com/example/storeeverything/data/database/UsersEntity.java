@@ -1,9 +1,9 @@
 package com.example.storeeverything.data.database;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
-import java.util.Objects;
 
 @Entity
 @Table(name = "USERS", schema = "PUBLIC", catalog = "DB")
@@ -34,4 +34,15 @@ public class UsersEntity {
     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
     private RolesEntity roleName;
 
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getRole() {
+        return String.valueOf(roleName);
+    }
 }

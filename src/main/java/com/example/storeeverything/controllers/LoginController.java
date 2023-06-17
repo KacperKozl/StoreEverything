@@ -21,10 +21,10 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping ("/register")
-    public String register(@RequestParam String username, @RequestParam String password){
-        System.out.println("Register data " + username + " " + password);
-//        System.out.println("Encrypted password " + bCryptpasswordEncoder.encode(password) );
-        return "login";
-    }
+//    @GetMapping ("/register")
+//    public String register(@RequestParam String username, @RequestParam String password){
+//        System.out.println("Register data " + username + " " + password);
+////        System.out.println("Encrypted password " + bCryptpasswordEncoder.encode(password) );
+//        return "login";
+//    }
 }
