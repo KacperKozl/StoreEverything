@@ -31,37 +31,37 @@ public class StoreEverythingWebSecurityConfig {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withUsername("user1")
-                        .password("user1")
-                        .roles("USER")
-                        .build();
-
-        UserDetails weak_user =
-                User.withUsername("user2")
-                        .password("user2")
-                        .roles("USER_WEAK")
-                        .build();
-
-        UserDetails admin =
-                User.withUsername("admin")
-                        .password("admin")
-                        .roles("ADMIN")
-                        .build();
-
-        System.out.println(user.getUsername()+"" + user.getPassword()+
-                "" +user.getAuthorities());
-
-        System.out.println(weak_user.getUsername()+"" + weak_user.getPassword()+
-                "" +weak_user.getAuthorities());
-
-        System.out.println(admin.getUsername()+"" + admin.getPassword()+
-                "" +admin.getAuthorities());
-
-        return new InMemoryUserDetailsManager(user, weak_user, admin);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        UserDetails user =
+//                User.withUsername("user1")
+//                        .password("user1")
+//                        .roles("USER")
+//                        .build();
+//
+//        UserDetails weak_user =
+//                User.withUsername("user2")
+//                        .password("user2")
+//                        .roles("USER_WEAK")
+//                        .build();
+//
+//        UserDetails admin =
+//                User.withUsername("admin")
+//                        .password("admin")
+//                        .roles("ADMIN")
+//                        .build();
+//
+//        System.out.println(user.getUsername()+"" + user.getPassword()+
+//                "" +user.getAuthorities());
+//
+//        System.out.println(weak_user.getUsername()+"" + weak_user.getPassword()+
+//                "" +weak_user.getAuthorities());
+//
+//        System.out.println(admin.getUsername()+"" + admin.getPassword()+
+//                "" +admin.getAuthorities());
+//
+//        return new InMemoryUserDetailsManager(user, weak_user, admin);
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -69,7 +69,7 @@ public class StoreEverythingWebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/styles/**").permitAll()
                         .requestMatchers("/").permitAll() // access to all users
-                        .requestMatchers("/items/category/*").hasRole("ADMIN") // only admin
+                        .requestMatchers("/items/category/*").hasAuthority("admin") // only admin
                         .requestMatchers("/items/shared/{id}").permitAll()
                         .anyRequest().authenticated() // access to the rest of the resources regardless of the role
                 )
@@ -88,14 +88,14 @@ public class StoreEverythingWebSecurityConfig {
         firewall.setAllowUrlEncodedSlash(true);
         return firewall;
     }
-//    @Bean
-//    public AuthenticationManager authenticationManager(UserDetailsService customUserDetailsService) {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(customUserDetailsService);
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        List<AuthenticationProvider> providers = List.of(authProvider);
-//
-//        return new ProviderManager(providers);
-//    }
+    @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService UsersAuthDBService) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(UsersAuthDBService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        List<AuthenticationProvider> providers = List.of(authProvider);
+
+        return new ProviderManager(providers);
+    }
 
 }

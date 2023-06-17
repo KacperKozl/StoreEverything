@@ -1,12 +1,19 @@
 package com.example.storeeverything.data.database;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "USERS", schema = "PUBLIC", catalog = "DB")
+@Data
+@NoArgsConstructor
 public class UsersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -33,5 +40,7 @@ public class UsersEntity {
     @ManyToOne
     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
     private RolesEntity roleName;
-
+    public Collection<GrantedAuthority> getRoles() {
+        return List.of(new SimpleGrantedAuthority(roleName.getRoleName()));
+    }
 }

@@ -14,9 +14,9 @@
         <ul class="nav-bar-links">
             <li><a th:href="@{/}">Home</a></li>
             <li><a sec:authorize-url="/items" th:href="@{/items/}">Notes</a></li>
-            <li><a sec:authorize="hasRole('ROLE_USER')" th:href="@{/items/add}">Add Note</a></li>
-            <li><a sec:authorize="hasRole('ADMIN')" th:href="@{/users}">Manage user</a></li>
-            <li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/items/category/add}">Add Category</a></li>
+            <li><a sec:authorize="hasAuthority('full')" th:href="@{/items/add}">Add Note</a></li>
+            <li><a sec:authorize="hasAuthority('admin')" th:href="@{/users}">Manage user</a></li>
+            <li><a sec:authorize="hasAuthority('admin')" th:href="@{/items/category/add}">Add Category</a></li>
             <li><a sec:authorize="isAuthenticated()">
                <form name="navbar-form" th:action="@{/logout}" method="POST">
                    <input type="submit" value="Sign out">
