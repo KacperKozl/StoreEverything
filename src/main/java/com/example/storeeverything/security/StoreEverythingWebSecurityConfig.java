@@ -65,6 +65,7 @@ public class StoreEverythingWebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/styles/**").permitAll()
                         .requestMatchers("/").permitAll() // access to all users
                         .requestMatchers("/items/category/*").hasRole("ADMIN") // only admin
                         .anyRequest().authenticated() // access to the rest of the resources regardless of the role

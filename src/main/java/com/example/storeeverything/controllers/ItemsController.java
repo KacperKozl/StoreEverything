@@ -85,14 +85,7 @@ public class ItemsController {
         service.addNewCategory(newCategory);
         return "redirect:/items/";
     }
-//    @PostMapping("/register")
-//    public String addUser(@Valid @ModelAttribute("newUser") User newUser, BindingResult result, Model model){
-//        if(result.hasErrors()){
-//            return "register";
-//        }
-//        service.addNewUser(newUser);
-//        return "redirect:/login";
-//    }
+
     @PostMapping("/edit/init")
     public String editNote(Model model, @ModelAttribute("indeks") Indeks indeks){
         NotesEntity note=service.getNotesEntityRepository().findById(indeks.getValue()).get();

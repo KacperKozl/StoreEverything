@@ -1,40 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
-    <link rel="stylesheet" th:href="@{/styles/text.css}">
+    <link rel="stylesheet" th:href="@{/styles/text.css}" />
     <meta charset="UTF-8">
     <title>Login Page</title>
 </head>
+
 <body>
+    <div class="container">
+        <div class="form">
+            <div class="form-main">
+                <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="POST">
+                    <div class="form">
+                    <h1>Login</h1>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control"
+                               name="username" id="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control"
+                               name="password" id="password" placeholder="Password">
+                    </div>
+                    <div class="message" th:if="${param.error}">
+                        Invalid username and password!
+                    </div>
 
-<!--    <div th:if="${param.error}">-->
-<!--        Invalid username and password.-->
-<!--    </div>-->
+                    <div class="message" th:if="${param.logout}">
+                        You have been logged out!
+                    </div>
 
-<!--    <div th:if="${param.logout}">-->
-<!--        You have been logged out.-->
-<!--    </div>-->
+                    <button class="btn" type="submit">Sign in</button>
 
-    <div class="form">
-        <div class="form-main">
-
-            <form th:action="@{/login}" method="POST">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control"
-                           name="username" id="username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control"
-                           name="password" id="password">
-                </div>
-                <button class="btn" type="submit">Sign in</button>
-            </form>
-
+                        <br>
+                        <div class="message">
+                            You don't have account yet?
+                        </div>
+                        <button class="btn" type="submit">Sign up</button>
+                    </div>
+                </form>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                You have been logged in already!
+            </div>
         </div>
     </div>
-
 </body>
 </html>

@@ -10,23 +10,33 @@
 <div class="container">
     <form class="form" action="#" th:action="@{/items/add}" th:object="${newNote}" method="POST">
         <h2>Add note</h2>
-        <label th:for="title">Title</label>
-        <input type="text" th:field="*{title}"/><span class="error-message" th:errors="*{title}">Błąd tytułu</span>
+        <div class="form-item-note">
+            <label th:for="title">Title</label>
+            <input type="text" th:field="*{title}"/><span class="error-message" th:errors="*{title}">Błąd tytułu</span>
+        </div>
 
-        <label th:for="content">Content</label>
-        <input type="text" th:field="*{content}"/><span class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Błąd treści</span>
+        <div class="form-item-note">
+            <label th:for="content">Content</label>
+            <input type="text" th:field="*{content}"/><span class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Błąd treści</span>
+        </div>
 
-        <label th:for="link">Link</label>
-        <input type="text" th:field="*{link}"/>
+        <div class="form-item-note">
+            <label th:for="link">Link</label>
+            <input type="text" th:field="*{link}"/>
+        </div>
 
-        <label th:for="reminder_date">Reminder date</label>
-        <input type="date" th:field="*{reminder_date}"/><span class="error-message" th:if="${#fields.hasErrors('reminder_date')}" th:errors="*{reminder_date}">Błąd daty</span>
+        <div class="form-item-note">
+            <label th:for="reminder_date">Reminder date</label>
+            <input type="date" th:field="*{reminder_date}"/><span class="error-message" th:if="${#fields.hasErrors('reminder_date')}" th:errors="*{reminder_date}">Błąd daty</span>
+        </div>
 
-            <label th:for="category">Select a category:</label>
-        <select th:field="*{category}">
-            <option th:each="option : ${category_list}" th:value="${option.categoryName}" th:text="${option.categoryName}"></option>
-        </select>
-            <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Błąd kategorii</span>
+        <div class="form-item-note">
+                <label th:for="category">Select a category:</label>
+                <select th:field="*{category}">
+                    <option th:each="option : ${category_list}" th:value="${option.categoryName}" th:text="${option.categoryName}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Błąd kategorii</span>
+        </div>
 
         <button class="btn" name="submit" type="submit" value="0">Add</button>
     </form>
