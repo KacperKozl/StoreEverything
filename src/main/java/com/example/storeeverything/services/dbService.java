@@ -46,8 +46,9 @@ public class dbService {
         ent.setCategoryName(newCat);
         return ent;
     }
-    public void addNewNote(Note newNote){
+    public void addNewNote(Note newNote,String login){
         NotesEntity ent=convertNote(newNote);
+        ent.setUser(usersEntityRepository.findByLogin(login));
         notesEntityRepository.saveAndFlush(ent);
     }
     public void addNewCategory(Category category){

@@ -50,7 +50,7 @@ public class NotesEntity {
     private Integer userId;
     @ManyToOne
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
-    private UsersEntity usersByUserId;
+    private UsersEntity user;
     public String getAdd(){
         return new SimpleDateFormat("dd-MM-yyyy").format(addDate);
     }

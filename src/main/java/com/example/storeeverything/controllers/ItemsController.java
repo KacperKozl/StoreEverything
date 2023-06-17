@@ -46,8 +46,10 @@ public class ItemsController {
 
     @GetMapping("/")
     public String start(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
         model.addAttribute("indeks",new Indeks());
-        model.addAttribute("notes",service.getNotesEntityRepository().findAll());
+        model.addAttribute("notes",service.getNotesEntityRepository().findByUser_Login(login));
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
@@ -55,14 +57,16 @@ public class ItemsController {
     }
     @RequestMapping("/sortby")
     public String showItems(SortIndex sortIndex, Model model, HttpServletResponse response){
-        if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByTitleAsc());
-        if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByTitleDesc());
-        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByCategoryName_CategoryNameAsc());
-        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByCategoryName_CategoryNameDesc());
-        if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByAddDateAsc());
-        if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByAddDateDesc());
-        if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByReminderDateAsc());
-        if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findAllByOrderByReminderDateDesc());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByTitleAsc(login));
+        if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByTitleDesc(login));
+        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByCategoryName_CategoryNameAsc(login));
+        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByCategoryName_CategoryNameDesc(login));
+        if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByAddDateAsc(login));
+        if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByAddDateDesc(login));
+        if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByReminderDateAsc(login));
+        if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByReminderDateDesc(login));
         if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==1) model.addAttribute("notes", service.getNotesEntityRepository().sortByPopularCategoriesAsc());
         if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes", service.getNotesEntityRepository().sortByPopularCategoriesDesc());
         model.addAttribute("sortIndex",new SortIndex());
@@ -88,20 +92,24 @@ public class ItemsController {
     }
     @PostMapping("/add")
     public String addItems(@Valid @ModelAttribute("newNote") Note newNote, BindingResult result, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
         if(result.hasErrors()){
             model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
             return "add_item";
         }
         newNote.setAdd_date();
-        service.addNewNote(newNote);
+        service.addNewNote(newNote,login);
         return "redirect:/items/";
     }
     @PostMapping("/filterbycategory")
     public String filterByCategory(Category e,Model model, HttpServletResponse response){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
-        model.addAttribute("notes", notesEntityRepository.findByCategoryName_CategoryName(e.getName()));
+        model.addAttribute("notes", notesEntityRepository.findByUser_LoginAndCategoryName_CategoryName(login,e.getName()));
 
         Cookie categoryCookie = new Cookie("category.last", e.getName());
         categoryCookie.setMaxAge(3600); // Ustawienie czasu życia ciasteczka (np. 1 godzina)

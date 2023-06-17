@@ -21,15 +21,16 @@ public interface NotesEntityRepository extends JpaRepository<NotesEntity, Intege
             update NotesEntity n set n.title = ?1
             where n.title = ?2 and n.content = ?3 and n.reminderDate = ?4 and n.categoryName = ?5""")
 
-    List<NotesEntity> findByCategoryName_CategoryName(String categoryName); //
-    List<NotesEntity> findAllByOrderByTitleAsc();
-    List<NotesEntity> findAllByOrderByTitleDesc();
-    List<NotesEntity> findAllByOrderByCategoryName_CategoryNameAsc();
-    List<NotesEntity> findAllByOrderByCategoryName_CategoryNameDesc();
-    List<NotesEntity> findAllByOrderByAddDateAsc();
-    List<NotesEntity> findAllByOrderByAddDateDesc();
-    List<NotesEntity> findAllByOrderByReminderDateAsc();
-    List<NotesEntity> findAllByOrderByReminderDateDesc();
+    List<NotesEntity> findByUser_LoginAndCategoryName_CategoryName(String login, String name);
+    List<NotesEntity> findByUser_LoginOrderByTitleAsc(String login);
+    List<NotesEntity> findByUser_LoginOrderByTitleDesc(String login);
+    List<NotesEntity> findByUser_LoginOrderByCategoryName_CategoryNameAsc(String login);
+    List<NotesEntity> findByUser_LoginOrderByCategoryName_CategoryNameDesc(String login);
+    List<NotesEntity> findByUser_LoginOrderByAddDateAsc(String login);
+    List<NotesEntity> findByUser_LoginOrderByAddDateDesc(String login);
+    List<NotesEntity> findByUser_LoginOrderByReminderDateAsc(String login);
+    List<NotesEntity> findByUser_LoginOrderByReminderDateDesc(String login);
+    List<NotesEntity> findByUser_Login(String login);
 
     /*@Query("""
         select n from NotesEntity n
