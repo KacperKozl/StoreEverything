@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 import java.util.List;
 
@@ -68,6 +70,7 @@ public class StoreEverythingWebSecurityConfig {
                         .requestMatchers("/styles/**").permitAll()
                         .requestMatchers("/").permitAll() // access to all users
                         .requestMatchers("/items/category/*").hasRole("ADMIN") // only admin
+                        .requestMatchers("/items/shared/{id}").permitAll()
                         .anyRequest().authenticated() // access to the rest of the resources regardless of the role
                 )
                 .formLogin((form) -> form //redirect to the login page regardless of the string
@@ -79,7 +82,12 @@ public class StoreEverythingWebSecurityConfig {
 
         return http.build();
     }
-
+    @Bean
+    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowUrlEncodedSlash(true);
+        return firewall;
+    }
 //    @Bean
 //    public AuthenticationManager authenticationManager(UserDetailsService customUserDetailsService) {
 //        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
