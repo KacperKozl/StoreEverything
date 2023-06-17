@@ -6,6 +6,7 @@ body {
     font-family: sans-serif;
     color: #393646;
     background: #f3f3f3;
+    font-family: "Montserrat";
 }
 
 /* homepage */
@@ -13,10 +14,11 @@ body {
 .home-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     place-items: center;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .home-buttons {
@@ -26,13 +28,14 @@ body {
 }
 
 .home-heading {
+    font-family: "Montserrat";
     color: #303030;
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 .home-text {
     color: #848484;
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
 /**/
@@ -41,6 +44,7 @@ body {
     position: relative;
     margin: 10vh auto 0 auto;
     overflow-x: hidden;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -61,6 +65,8 @@ ol {
     cursor: pointer;
     margin: 10px;
     border: 1px solid #303030;
+    background: #fff;
+    transition-duration: 0.4s;
     border-radius: 14px;
 }
 

@@ -5,6 +5,9 @@
     <link rel="stylesheet" th:href="@{/styles/text.css}">
     <meta charset="UTF-8">
     <title>Title</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
+            rel="stylesheet">
 </head>
 <body>
 <header th:insert="navbar.html :: basic"> </header>
@@ -14,7 +17,7 @@
             <div class="forms-index-container">
                 <form class="form-index-item" th:action="@{/items/sortby}" th:object="${sortIndex}" method="GET">
                     <h2 sec:authorize="isAuthenticated()">
-                        Welcome to StoreEverything:  <span sec:authentication="name"></span>
+                      Logged as:  <span sec:authentication="name"></span>
                     </h2>
                     <label th:for="value">Posortuj po</label>
                     <select th:field="*{value} ">

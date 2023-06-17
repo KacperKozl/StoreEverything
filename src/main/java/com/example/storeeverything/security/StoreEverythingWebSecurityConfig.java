@@ -73,6 +73,7 @@ public class StoreEverythingWebSecurityConfig {
                 .formLogin((form) -> form //redirect to the login page regardless of the string
                         .loginPage("/login")
                         .permitAll()
+                        .defaultSuccessUrl("/", true)
                 )
                 .logout((logout) -> logout.logoutSuccessUrl("/").permitAll());
 

@@ -1,15 +1,21 @@
 package com.example.storeeverything.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
 
-//    @Autowired
+////    @Autowired
 //    BCryptPasswordEncoder bCryptpasswordEncoder;
 
+    @GetMapping(value="/")
+    public String hello() {
+        return "startpage";
+    }
     @GetMapping("/login")
     public String login(){
         return "login";
