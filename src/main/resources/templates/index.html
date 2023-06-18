@@ -19,7 +19,7 @@
                     <h2 sec:authorize="isAuthenticated()">
                       Logged as:  <span sec:authentication="name"></span>
                     </h2>
-                    <label th:for="value">Posortuj po</label>
+                    <label th:for="value">Sort by:</label>
                     <select th:field="*{value} ">
                         <option th:text="alfabetycznie" th:value="alf"></option>
                         <option th:text="data_dodania" th:value="A_date"></option>
@@ -27,23 +27,23 @@
                         <option th:text="popularne_kategorie" th:value="pop_cat"></option>
                         <option th:text="data_przypomnienia" th:value="R_date"></option>
                     </select>
-                    <label th:for="direction">Kolejność:</label>
+                    <label th:for="direction">Order:</label>
                     <select th:field="*{direction}">
                         <option th:text="asc" th:value=1></option>
                         <option th:text="desc" th:value=-1></option>
                     </select>
-                    <button class="btn" name="submit" type="submit" value="0">Wyszukaj</button>
+                    <button class="btn" name="submit" type="submit" value="0">Search</button>
                 </form>
 
                 <form class="form-search" action="#" th:action="@{/items/filterbycategory}" th:object="${category}" method="POST">
-                    <label th:for="name">Wybierz kategorię</label>
+                    <label th:for="name">Select category:</label>
                 <select th:field="*{name}">
                     <option th:each="option : ${category_list}" th:value="${option.categoryName}" th:text="${option.categoryName}"></option>
                 </select>
-                    <button class="btn" name="submit" type="submit" value="0">Wyszukaj</button>
+                    <button class="btn" name="submit" type="submit" value="0">Search</button>
                 </form>
                 <form class="form-search" action="#" th:action="@{/items/cookie}" method="GET">
-                    <button class="btn" name="submit" type="submit" value="0">Wyczyść sortowanie</button>
+                    <button class="btn" name="submit" type="submit" value="0">Clean sort</button>
                 </form>
             </div>
 
