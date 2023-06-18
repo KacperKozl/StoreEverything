@@ -1,20 +1,34 @@
 package com.example.storeeverything.data;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 public class User implements UserDetails {
+    @NotNull
+    @NotEmpty
     private Integer userId;
+    @NotNull
+    @NotEmpty
     private String name;
+    @NotNull
+    @NotEmpty
     private String surname;
+    @NotNull
+    @NotEmpty
     private Object login;
+    @NotNull
+    @NotEmpty
     private Object password;
+
     private Integer age;
     private Integer roleId;
 
+    public User() {}
     public User(Integer userId, String name, String surname, Object login, Object password, Integer age, Integer roleId) {
         this.userId = userId;
         this.name = name;
@@ -23,6 +37,16 @@ public class User implements UserDetails {
         this.password = password;
         this.age = age;
         this.roleId = roleId;
+    }
+
+    public User(Integer userId, String name, String surname, Object login, Object password, Integer roleId) {
+        this.userId = userId;
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.roleId = roleId;
+        this.age = null;
     }
 
     public User(Integer userId, String name, String surname, Object login, Object password) {

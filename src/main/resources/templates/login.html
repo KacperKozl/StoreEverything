@@ -19,30 +19,30 @@
                     <div class="form">
                     <h1>Login</h1>
                     <div class="form-group">
-                        <label for="username">Username <i class="fa-solid fa-user"></i></label>
+                        <label for="username">Login <i class="fa-solid fa-user"></i></label>
                         <input type="text" class="form-control"
-                               name="username" id="username" placeholder="Username">
+                               name="username" id="username" placeholder="Login">
                     </div>
                     <div class="form-group">
                         <label for="password">Password <i class="fa-solid fa-lock"></i></label>
                         <input type="password" class="form-control"
                                name="password" id="password" placeholder="Password">
                     </div>
-                    <div class="message" th:if="${param.error}">
-                        Invalid username and password!
+                    <div class="message error" th:if="${param.error}">
+                        <i class="error fa-solid fa-circle-exclamation"></i> Invalid username and password!
                     </div>
 
                     <div class="message" th:if="${param.logout}">
                         You have been logged out!
                     </div>
 
-                    <button class="btn" type="submit">Sign in</button>
+                    <button class="btn submit" type="submit">Submit</button>
 
                         <br>
                         <div class="message">
-                            Don't have account yet?
+                            Don't have an account yet?
                         </div>
-                        <button class="btn" type="submit">Sign up</button>
+                        <a class="btn redirect" th:href="@{/register}">Sign up</a>
                     </div>
                 </form>
             </div>

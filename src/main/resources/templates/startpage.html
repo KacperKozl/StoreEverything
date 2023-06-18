@@ -12,15 +12,13 @@
 <body>
 <header th:insert="navbar.html :: basic"> </header>
 
-  <div class="container">
     <div class="home-container">
       <h1 class="home-heading">Welcome to StoreEverything</h1>
       <p class="home-text">Don't keep notes 📝 in your head, give them life!</p>
       <div class="home-buttons">
-        <a sec:authorize="!isAuthenticated()" th:href="@{/register}" class="btn">Register</a>
-        <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="btn">Login</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login.html}" class="btn redirect">Login</a>
       </div>
     </div>
-  </div>
+
 </body>
 </html>

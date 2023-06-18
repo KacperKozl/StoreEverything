@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
   <link rel="stylesheet" th:href="@{/styles/text.css}">
@@ -9,44 +10,68 @@
           href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
           rel="stylesheet">
 </head>
+
 <body>
 
-<div th:if="${param.error}">
-  Invalid credentials.
-</div>
+  <div class="form">
+    <div class="form-main">
+      <form action="#" th:action="@{/register}" th:object="${userData}" method="POST">
+        <div class="form">
+          <h1>Sign up</h1>
 
+          <div class="form-group">
+            <label for="name">Name <i class="fa-sharp fa-solid fa-id-card"></i></label>
+            <input type="text" class="form-control"
+                   name="name" id="name" th:field="*{name}"
+                   placeholder="Name">
+            <i class="error fa-solid fa-circle-exclamation"></i><span class="message error" th:errors="*{name}">Błąd nazwy</span>
+          </div>
 
-<div class="form">
-  <div class="form-main">
+          <div class="form-group">
+            <label for="surname">Surname <i class="fa-sharp fa-solid fa-id-card"></i></label>
+            <input type="text" class="form-control"
+                   name="surname" id="surname" th:field="*{surname}"
+                   placeholder="Surname">
+            <i class="error fa-solid fa-circle-exclamation"></i><span class="message error" th:errors="*{surname}">Błąd nazwy</span>
+          </div>
 
-    <form th:action="@{/register}" method="POST">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control"
-               name="username" id="username">
-      </div>
+          <div class="form-group">
+            <label for="login">Login <i class="fa-solid fa-user"></i></label>
+            <input type="text" class="form-control"
+                   name="login" id="login" th:field="*{login}"
+                   placeholder="Login">
+            <i class="error fa-solid fa-circle-exclamation"></i><span class="message error" th:errors="*{login}">Błąd nazwy</span>
+          </div>
+          <div class="form-group">
+            <label for="password">Password <i class="fa-solid fa-lock"></i></label>
+            <input type="password" class="form-control"
+                   name="password" id="password" th:field="*{password}"
+                   placeholder="Password">
+            <i class="error fa-solid fa-circle-exclamation"></i><span class="message error" th:errors="*{password}">Błąd nazwy</span>
+          </div>
 
-      <div class="form-group">
-        <label for="username">Surname</label>
-        <input type="text" class="form-control"
-               name="surname" id="surname">
-      </div>
+          <div class="form-group">
+            <label for="password">Password <i class="fa-solid fa-lock"></i></label>
+            <input type="password" class="form-control"
+                   name="password-confirmation" id="password-confirmation"
+                   placeholder="Retype password">
+          </div>
 
-      <div class="form-group">
-        <label for="username">Login</label>
-        <input type="text" class="form-control"
-               name="login" id="login">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control"
-               name="password" id="password">
-      </div>
-      <button class="btn" type="submit" class="btn-login">Sign up</button>
-    </form>
+<!--          <div class="message error" th:if="${#fields.hasErrors('*')}">-->
+<!--            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>-->
+<!--          </div>-->
 
+            <button class="btn submit" type="submit">Submit</button>
+
+            <div class="message">
+              You have an account already?
+            </div>
+             <a class="btn redirect" th:href="@{/login}">Sign in</a>
+        </div>
+      </form>
+
+    </div>
   </div>
-</div>
-
+<script src="https://kit.fontawesome.com/a4ec9618cd.js" crossorigin="anonymous"></script>
 </body>
 </html>
