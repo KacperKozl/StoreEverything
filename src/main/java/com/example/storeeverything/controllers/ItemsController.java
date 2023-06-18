@@ -106,7 +106,7 @@ public class ItemsController {
 
         // Tworzenie ciasteczka
         Cookie sortCookie = new Cookie("sort.last", sortIndex.getValue() + "#" + sortIndex.getDirection());
-        sortCookie.setMaxAge(3600); // Ustawienie czasu życia ciasteczka (np. 1 godzina)
+        sortCookie.setMaxAge(36000); // Ustawienie czasu życia ciasteczka (np. 10 godzin)
         sortCookie.setPath("/"); // Ustawienie ścieżki, na której będzie dostępne ciasteczko
 
         // Ustawienie ciasteczka w odpowiedzi
@@ -153,6 +153,9 @@ public class ItemsController {
         if(result.hasErrors()){
             return "add_category";
         }
+        if(service.getCategoriesEntityRepository().findByCategoryName(newCategory.getName())!=null) {
+            result.rejectValue("name","newCategory.login","Kategoria już istnieje");
+            return "add_category";}
         service.addNewCategory(newCategory);
         return "redirect:/items/";
     }
