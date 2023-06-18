@@ -3,26 +3,31 @@
 <head>
     <link rel="stylesheet" th:href="@{/styles/text.css}">
     <meta charset="UTF-8">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
+            rel="stylesheet">
+
     <title>Shared by Others</title>
 </head>
 <body>
 <header th:insert="navbar.html :: basic"> </header>
-
-<div class="notes-box">
-    <h2>
-        Today's Notes</span>
-    </h2>
-    <ol th:each="note:${notes}">
-        <div class="notes-box-item">
-            <p class="textbox2">
-                <span class="textbox1" th:text="${note.title}"/>
-                <span class="textbox1" th:text="${note.categoryName.categoryName}"/>
-                <span class="textbox1" th:text="${note.content}"/>
-                <a class="textbox1" th:href="@{http://{link}(link=${note.link})}" th:text="${note.link}"/>
-                <span class="textbox1" th:text="${note.getAdd}"/>
-                <span class="textbox1" th:text="${note.getReminder}"/>
-        </div>
-    </ol>
+<div class="container">
+    <div class="notes-box">
+        <h2>
+            Today's Notes
+        </h2>
+        <ol th:each="note:${notes}">
+            <div class="notes-box-item">
+                <p class="textbox2">
+                    <span class="textbox1" th:text="${note.title}"/>
+                    <span class="textbox1" th:text="${note.categoryName.categoryName}"/>
+                    <span class="textbox1" th:text="${note.content}"/>
+                    <a class="textbox1" th:href="@{http://{link}(link=${note.link})}" th:text="${note.link}"/>
+                    <span class="textbox1" th:text="${note.getAdd}"/>
+                    <span class="textbox1" th:text="${note.getReminder}"/>
+            </div>
+        </ol>
+    </div>
 </div>
 </body>
 </html>

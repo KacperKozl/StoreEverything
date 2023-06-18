@@ -3,8 +3,7 @@
 <head>
     <link rel="stylesheet" th:href="@{/styles/text.css}">
     <meta charset="UTF-8">
-<<<<<<< HEAD
-    <title>Edytuj Notatkę</title>
+    <title>Shared link</title>
     <link
             href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
             rel="stylesheet">
@@ -15,15 +14,17 @@
 </head>
 <body>
 <header th:insert="navbar.html :: basic"> </header>
-<div class="notes-box-item" style="position: relative;top:80px">
-    <p class="textbox2">
-        <span class="textbox1" th:text="${note.getTitle()}"/>
-        <span class="textbox1" th:text="${note.categoryName.categoryName}"/>
-        <span class="textbox1" th:text="${note.content}"/>
-        <a class="textbox1" th:href="@{http://{link}(link=${note.link})}" th:text="${note.link}"/>
-        <span class="textbox1" th:text="${note.getAdd}"/>
-        <span class="textbox1" th:text="${note.getReminder}"/>
-    </p>
+<div class="container">
+    <div class="notes-box-item" style="position: relative;top:80px">
+        <p class="textbox2">
+            <span class="textbox1" th:text="${note.getTitle()}"/>
+            <span class="textbox1" th:text="${note.categoryName.categoryName}"/>
+            <span class="textbox1" th:text="${note.content}"/>
+            <a class="textbox1" th:href="@{http://{link}(link=${note.link})}" th:text="${note.link}"/>
+            <span class="textbox1" th:text="${note.getAdd}"/>
+            <span class="textbox1" th:text="${note.getReminder}"/>
+        </p>
+    </div>
 </div>
 </body>
 </html>
