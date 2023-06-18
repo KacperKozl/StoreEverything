@@ -15,8 +15,9 @@
     <form class="form" action="#" th:action="@{/items/category/add}" th:object="${newCategory}" method="POST">
         <h2>Add Category</h2>
         <label th:for="name">Name</label>
-        <input type="text" th:field="*{name}"/><span class="error-message" th:errors="*{name}">Błąd nazwy</span>
-        <button class="btn" name="submit" type="submit" value="0">Dodaj</button>
+        <input type="text" th:field="*{name}"/>
+        <i class="error fa-solid fa-circle-exclamation"></i><span class="message error" th:errors="*{name}">Błąd nazwy</span>
+        <button class="btn submit" name="submit" type="submit" value="0">Sumbit</button>
     </form>
 </div>
 </body>

@@ -68,6 +68,7 @@ public class StoreEverythingWebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/styles/**").permitAll()
+                        .requestMatchers("/register").permitAll()
                         .requestMatchers("/").permitAll() // access to all users
                         .requestMatchers("/items/category/*").hasAuthority("full") // only admin
                         .requestMatchers("/items/shared/{id}").permitAll()
