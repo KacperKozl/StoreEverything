@@ -15,8 +15,6 @@ import java.util.Optional;
 
 @Repository
 public interface NotesEntityRepository extends JpaRepository<NotesEntity, Integer> {
-    @Transactional
-    @Modifying
 
     List<NotesEntity> findByUser_LoginAndCategoryName_CategoryName(String login, String name);
     List<NotesEntity> findByUser_LoginOrderByTitleAsc(String login);
@@ -35,19 +33,13 @@ public interface NotesEntityRepository extends JpaRepository<NotesEntity, Intege
         where n.categoryName.categoryName = ?1
         order by n.title asc""")
     List<NotesEntity> findByCategoryName_CategoryName(String categoryName);*/
-    @Query("""
-            select n from NotesEntity n
-            join n.categoryName c
-            group by c.categoryName
-            order by count(n) asc""")
-    List<NotesEntity> sortByPopularCategoriesAsc();
+    @Query(value="Select notes.* from notes, (Select Category_id,count(1) liczba from notes group by category_id ) tab, users u where notes.category_id=tab.category_id and u.user_id=notes.user_id and u.login=?1 order by liczba asc;"
+    ,nativeQuery = true)
+    List<NotesEntity> sortByPopularCategoriesAsc(String login);
 
-    @Query("""
-            select n from NotesEntity n
-            join n.categoryName c
-            group by c.categoryName
-            order by count(n) desc""")
-    List<NotesEntity> sortByPopularCategoriesDesc();
+    @Query(value="Select notes.* from notes, (Select Category_id,count(1) liczba from notes group by category_id ) tab, users u where notes.category_id=tab.category_id and u.user_id=notes.user_id and u.login=?1 order by liczba desc;"
+            ,nativeQuery = true)
+    List<NotesEntity> sortByPopularCategoriesDesc(String login);
 
     @Override
     Optional<NotesEntity> findById(Integer integer);
