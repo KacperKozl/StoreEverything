@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage user</title>
+  <link rel="stylesheet" th:href="@{/styles/text.css}" />
+  <link
+          href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+<header th:insert="navbar.html :: basic"> </header>
+  <div class="container">
+    <div class="notes-box"?>
+      <h2>Users</h2>
+      <ol th:each="user:${users}">
+        <div class="notes-box-item">
+          <p class="textbox2">
+            UserId: <span class="textbox1" th:text="${user.userId}"/>
+            Name: <span class="textbox1" th:text="${user.name}"/>
+            Surname: <span class="textbox1" th:text="${user.surname}"/>
+            Age: <span class="textbox1" th:text="${user.age}"/>
+            RoleId: <span class="textbox1" th:text="${user.roleId}"/>
+          </p>
+
+<!--          <div class="notes-box-item-buttons">-->
+<!--            <form action="#" th:action="@{/users/edit}" th:object="${indeks}" method="POST">-->
+<!--              <input type="hidden" th:value="${user.id}" name="value"/>-->
+<!--              <button class="btn submit" name="submit" type="submit">Edit</button>-->
+<!--            </form>-->
+<!--          </div>-->
+        </div>
+      </ol>
+    </div>
+  </div>
+</body>
+</html>
