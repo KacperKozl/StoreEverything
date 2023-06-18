@@ -51,7 +51,7 @@ public class ItemsController {
         Cookie[] ciasteczka=request.getCookies();
         for (Cookie cookie:ciasteczka) {
             if(cookie.getName().compareTo("sort.last")==0){
-                String[] param=cookie.getValue().split("_");
+                String[] param=cookie.getValue().split("#");
                 SortIndex ind=new SortIndex(param[0],Integer.parseInt(param[1]));
                 redirectAttributes.addFlashAttribute("sortIndex",ind);
                 return "redirect:/items/sortby";
@@ -105,7 +105,7 @@ public class ItemsController {
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
 
         // Tworzenie ciasteczka
-        Cookie sortCookie = new Cookie("sort.last", sortIndex.getValue() + "_" + sortIndex.getDirection());
+        Cookie sortCookie = new Cookie("sort.last", sortIndex.getValue() + "#" + sortIndex.getDirection());
         sortCookie.setMaxAge(3600); // Ustawienie czasu życia ciasteczka (np. 1 godzina)
         sortCookie.setPath("/"); // Ustawienie ścieżki, na której będzie dostępne ciasteczko
 
