@@ -49,7 +49,7 @@ public class dbService {
     public void addNewNote(Note newNote,String login){
         NotesEntity ent=convertNote(newNote);
         ent.setUser(usersEntityRepository.findByLogin(login));
-        notesEntityRepository.saveAndFlush(ent);
+        notesEntityRepository.save(ent);
     }
     public void addNewCategory(Category category){
         CategoriesEntity ent=new CategoriesEntity();

@@ -18,8 +18,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.List;
+
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Configuration
 @EnableWebSecurity
@@ -68,9 +71,11 @@ public class StoreEverythingWebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/styles/**").permitAll()
+
                         .requestMatchers("/").permitAll() // access to all users
                         .requestMatchers("/items/category/*").hasAuthority("full") // only admin
                         .requestMatchers("/items/shared/{id}").permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                         .anyRequest().authenticated() // access to the rest of the resources regardless of the role
                 )
                 .formLogin((form) -> form //redirect to the login page regardless of the string
@@ -78,7 +83,8 @@ public class StoreEverythingWebSecurityConfig {
                         .permitAll()
                         .defaultSuccessUrl("/items/today", true)
                 )
-                .logout((logout) -> logout.logoutSuccessUrl("/").permitAll());
+                .logout((logout) -> logout.logoutSuccessUrl("/").permitAll())
+                .csrf(csrf -> csrf .ignoringRequestMatchers(toH2Console())).headers().frameOptions().disable();
 
         return http.build();
     }
