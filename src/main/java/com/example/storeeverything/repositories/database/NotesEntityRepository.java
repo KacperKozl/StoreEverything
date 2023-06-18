@@ -17,9 +17,6 @@ import java.util.Optional;
 public interface NotesEntityRepository extends JpaRepository<NotesEntity, Integer> {
     @Transactional
     @Modifying
-    @Query("""
-            update NotesEntity n set n.title = ?1
-            where n.title = ?2 and n.content = ?3 and n.reminderDate = ?4 and n.categoryName = ?5""")
 
     List<NotesEntity> findByUser_LoginAndCategoryName_CategoryName(String login, String name);
     List<NotesEntity> findByUser_LoginOrderByTitleAsc(String login);
@@ -31,6 +28,7 @@ public interface NotesEntityRepository extends JpaRepository<NotesEntity, Intege
     List<NotesEntity> findByUser_LoginOrderByReminderDateAsc(String login);
     List<NotesEntity> findByUser_LoginOrderByReminderDateDesc(String login);
     List<NotesEntity> findByUser_Login(String login);
+    List<NotesEntity> findByUser_LoginAndReminderDate(String login,Date date);
 
     /*@Query("""
         select n from NotesEntity n

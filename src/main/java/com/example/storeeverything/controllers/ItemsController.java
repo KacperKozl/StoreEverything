@@ -23,11 +23,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +47,16 @@ public class ItemsController {
     private SharedEntityRepository sharedEntityRepository;
 
     @GetMapping("/")
-    public String start(Model model){
+    public String start(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        Cookie[] ciasteczka=request.getCookies();
+        for (Cookie cookie:ciasteczka) {
+            if(cookie.getName().compareTo("sort.last")==0){
+                String[] param=cookie.getValue().split("_");
+                SortIndex ind=new SortIndex(param[0],Integer.parseInt(param[1]));
+                redirectAttributes.addFlashAttribute("sortIndex",ind);
+                return "redirect:/items/sortby";
+            }
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         model.addAttribute("indeks",new Indeks());
@@ -55,8 +66,28 @@ public class ItemsController {
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
         return "index";
     }
+    @RequestMapping("/today")
+    public String today(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        List<NotesEntity> list=service.getNotesEntityRepository().findByUser_LoginAndReminderDate(login,new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+        if(list.isEmpty()) return "redirect:/";
+        model.addAttribute("notes",list);
+        return "today";
+    }
+    @RequestMapping("/cookie")
+    public String deleteSortCookie(Model model,HttpServletResponse response){
+
+        Cookie sortCookie = new Cookie("sort.last", null);
+        sortCookie.setMaxAge(0); // Ustawienie czasu życia ciasteczka (np. 1 godzina)
+        sortCookie.setPath("/"); // Ustawienie ścieżki, na której będzie dostępne ciasteczko
+
+        // Ustawienie ciasteczka w odpowiedzi
+        response.addCookie(sortCookie);
+        return "redirect:/items/";
+    }
     @RequestMapping("/sortby")
-    public String showItems(SortIndex sortIndex, Model model, HttpServletResponse response){
+    public String showItems(@ModelAttribute SortIndex sortIndex, Model model, HttpServletResponse response){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByTitleAsc(login));
@@ -74,7 +105,7 @@ public class ItemsController {
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
 
         // Tworzenie ciasteczka
-        Cookie sortCookie = new Cookie("sort.last", sortIndex.getValue() + "-" + sortIndex.getDirection());
+        Cookie sortCookie = new Cookie("sort.last", sortIndex.getValue() + "_" + sortIndex.getDirection());
         sortCookie.setMaxAge(3600); // Ustawienie czasu życia ciasteczka (np. 1 godzina)
         sortCookie.setPath("/"); // Ustawienie ścieżki, na której będzie dostępne ciasteczko
 
@@ -110,14 +141,6 @@ public class ItemsController {
         model.addAttribute("category",new Category("a"));
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
         model.addAttribute("notes", notesEntityRepository.findByUser_LoginAndCategoryName_CategoryName(login,e.getName()));
-
-        Cookie categoryCookie = new Cookie("category.last", e.getName());
-        categoryCookie.setMaxAge(3600); // Ustawienie czasu życia ciasteczka (np. 1 godzina)
-        categoryCookie.setPath("/"); // Ustawienie ścieżki, na której będzie dostępne ciasteczko
-
-        // Ustawienie ciasteczka w odpowiedzi
-        response.addCookie(categoryCookie);
-
         return "index";
     }
     @GetMapping("/category/add")
@@ -145,6 +168,9 @@ public class ItemsController {
     @PostMapping("/edit")
     public String editNote(@Valid @ModelAttribute("newNote") Note newNote, BindingResult result, Model model){
         NotesEntity note=service.convertNote(newNote);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        note.setUser(service.getUsersEntityRepository().findByLogin(login));
         if(result.hasErrors()){
             System.out.println(result.getAllErrors());
             model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
