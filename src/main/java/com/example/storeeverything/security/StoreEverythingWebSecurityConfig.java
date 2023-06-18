@@ -1,5 +1,7 @@
 package com.example.storeeverything.security;
 
+import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,6 +35,10 @@ public class StoreEverythingWebSecurityConfig {
 //        return new BCryptPasswordEncoder(rounds);
         return NoOpPasswordEncoder.getInstance();
     }
+    @Autowired
+    Logout customLogoutHandler;
+    @Autowired
+    Session customSessionStrategy;
 
 //    @Bean
 //    public UserDetailsService userDetailsService() {
@@ -83,7 +89,8 @@ public class StoreEverythingWebSecurityConfig {
                         .permitAll()
                         .defaultSuccessUrl("/items/today", true)
                 )
-                .logout((logout) -> logout.logoutSuccessUrl("/").permitAll())
+                .sessionManagement((session)->session.invalidSessionStrategy(customSessionStrategy))
+                .logout((logout) -> logout.logoutSuccessUrl("/").permitAll().addLogoutHandler(customLogoutHandler))
                 .csrf(csrf -> csrf .ignoringRequestMatchers(toH2Console())).headers().frameOptions().disable();
 
         return http.build();
