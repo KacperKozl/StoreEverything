@@ -6261,3 +6261,7 @@ Wrong user name or password [28000-214]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:510)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	... 91 more
+2023-06-19 16:39:54 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "[*]delet from shared"; oczekiwano "DELETE, DROP, DECLARE, DEALLOCATE"
+Syntax error in SQL statement "[*]delet from shared"; expected "DELETE, DROP, DECLARE, DEALLOCATE"; SQL statement:
+delet from shared [42001-214]
