@@ -38,7 +38,8 @@
                 <form class="form-search" action="#" th:action="@{/items/filterbycategory}" th:object="${category}" method="POST">
                     <label th:for="name">Select category:</label>
                 <select th:field="*{name}">
-                    <option th:each="option : ${category_list}" th:value="${option.categoryName}" th:text="${option.categoryName}"></option>
+                    <option th:if="${category.getName()}!=a" th:value="${category.getName()}" th:text="${category.getName()}"></option>
+                    <option th:each="option : ${category_list}" th:if="${category.getName()}!=${option.categoryName}" th:value="${option.categoryName}" th:text="${option.categoryName}"></option>
                 </select>
                     <button class="btn" name="submit" type="submit" value="0">Search</button>
                 </form>

@@ -112,7 +112,7 @@ public class ItemsController {
         Collections.sort(daty,Collections.reverseOrder());
         model.addAttribute("indeks",new Indeks());
         model.addAttribute("notes",notatki);
-        model.addAttribute("sortIndex",new SortIndex());
+        model.addAttribute("sortIndex",sortIndex);
         model.addAttribute("category",new Category("a"));
         model.addAttribute("date",new DateWrapper());
         model.addAttribute("dates_list",daty);
@@ -158,7 +158,7 @@ public class ItemsController {
         model.addAttribute("indeks",new Indeks());
         model.addAttribute("notes",notatki);
         model.addAttribute("sortIndex",new SortIndex());
-        model.addAttribute("category",new Category("a"));
+        model.addAttribute("category",new Category(e.getName()));
         model.addAttribute("date",new DateWrapper());
         model.addAttribute("dates_list",daty);
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
