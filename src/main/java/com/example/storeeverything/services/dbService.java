@@ -5,20 +5,13 @@ import com.example.storeeverything.data.Note;
 import com.example.storeeverything.data.User;
 import com.example.storeeverything.data.database.CategoriesEntity;
 import com.example.storeeverything.data.database.NotesEntity;
-import com.example.storeeverything.data.database.SharedEntity;
 import com.example.storeeverything.data.database.UsersEntity;
-import com.example.storeeverything.repositories.database.CategoriesEntityRepository;
-import com.example.storeeverything.repositories.database.NotesEntityRepository;
-import com.example.storeeverything.repositories.database.SharedEntityRepository;
-import com.example.storeeverything.repositories.database.UsersEntityRepository;
+import com.example.storeeverything.repositories.database.*;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.swing.text.html.Option;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @Getter
@@ -30,6 +23,8 @@ public class dbService {
     NotesEntityRepository notesEntityRepository;
     @Autowired
     UsersEntityRepository usersEntityRepository;
+    @Autowired
+    RolesEntityRepository rolesEntityRepository;
     @Autowired
     SharedEntityRepository sharedEntityRepository;
 
@@ -46,6 +41,21 @@ public class dbService {
         ent.setCategoryName(newCat);
         return ent;
     }
+
+    public UsersEntity convertUser(User newUser) {
+        UsersEntity ent = new UsersEntity();
+
+        ent.setUserId(newUser.getId());
+        ent.setName(newUser.getName());
+        ent.setSurname(newUser.getSurname());
+        ent.setAge(newUser.getAge());
+        ent.setRoleId(newUser.getRoleId());
+        ent.setLogin((String) newUser.getLogin());
+        ent.setPassword(newUser.getPassword());
+
+        return ent;
+    }
+
     public void addNewNote(Note newNote,String login){
         NotesEntity ent=convertNote(newNote);
         ent.setUser(usersEntityRepository.findByLogin(login));

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Edit user</title>
@@ -10,6 +9,32 @@
           rel="stylesheet">
 </head>
 <body>
+<header th:insert="navbar.html :: basic"> </header>
+  <div class="container">
+    <form class="form" action="#" th:action="@{/users/edit/init}" th:object="${newUser}" method="POST">
+      <h2>Edit User</h2>
+      <label for="userId">UserId</label>
+      <input th:type="text" th:value="${editedUser.userId}" id="userId" name="userId" disabled/>
 
+      <label for="name">Name</label>
+      <input th:type="text" th:value="${editedUser.name}" id="name" name="name" disabled/>
+
+
+      <label for="surname">Surname</label>
+      <input th:type="text" th:value="${editedUser.surname}" id="surname" name="surname" disabled/>
+
+      <label for="age">Age</label>
+      <input type="number" th:value="${editedUser.age}" id="age" name="age" disabled/>
+
+      <label for="roleId">RoleId</label>
+      <select th:field="*{roleId}" id="roleId" name="roleId">
+        <option th:value="${editedUser.getRoleId()}" th:text="${editedUser.getRoleId()}"></option>
+        <option th:each="option : ${roles}" th:if="${editedUser.getRoleName().getRoleName() != option.getRoleName()}" th:value="${option.getRoleId()}" th:text="${option.getRoleName()}"></option>
+      </select>
+
+      <button class="btn submit" name="submit" type="submit" value="0">Submit</button>
+      <a class="btn redirect" th:href="@{/users}">Users</a>
+    </form>
+  </div>
 </body>
 </html>
