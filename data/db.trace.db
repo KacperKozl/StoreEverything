@@ -6130,3 +6130,31 @@ Select notes from notes, (Select Category_id,count(1) liczba from notes group by
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-06-19 14:49:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Wartość za długa dla kolumny "PASSWORD CHARACTER VARYING(50)": "'$2a$12$2JAK6Wy8b28aXs6ACHSbmOEVWX6H9bG.n4OUCNHJq5fA.g7BnjhIy' (60)"
+Value too long for column "PASSWORD CHARACTER VARYING(50)": "'$2a$12$2JAK6Wy8b28aXs6ACHSbmOEVWX6H9bG.n4OUCNHJq5fA.g7BnjhIy' (60)"; SQL statement:
+insert into db.public.users (user_id, age, login, name, password, role_id, surname) values (default, ?, ?, ?, ?, ?, ?) [22001-214]
+2023-06-19 14:56:39 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "update [*]table users\000d\000aset password=$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW\000d\000awhere login=admin"; oczekiwano "identifier"
+Syntax error in SQL statement "update [*]table users\000d\000aset password=$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW\000d\000awhere login=admin"; expected "identifier"; SQL statement:
+update table users
+set password=$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW
+where login=admin [42001-214]
+2023-06-19 14:57:05 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "update [*]table users\000d\000aset password='$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW'\000d\000awhere login=admin"; oczekiwano "identifier"
+Syntax error in SQL statement "update [*]table users\000d\000aset password='$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW'\000d\000awhere login=admin"; expected "identifier"; SQL statement:
+update table users
+set password='$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW'
+where login=admin [42001-214]
+2023-06-19 14:57:11 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "update [*]table users\000d\000aset password='$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW'\000d\000awhere login='admin'"; oczekiwano "identifier"
+Syntax error in SQL statement "update [*]table users\000d\000aset password='$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW'\000d\000awhere login='admin'"; expected "identifier"; SQL statement:
+update table users
+set password='$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW'
+where login='admin' [42001-214]
+2023-06-19 14:57:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "update [*]table users\000d\000aset password='$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW'\000d\000awhere login='admin'"; oczekiwano "identifier"
+Syntax error in SQL statement "update [*]table users\000d\000aset password='$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW'\000d\000awhere login='admin'"; expected "identifier"; SQL statement:
+update table users
+set password='$2a$12$ZHKaoMnBKYxqG.adDiyXBet7PaHKVHo4DjV3WC37fxEzWd5iwENiW'
+where login='admin' [42001-214]

@@ -31,9 +31,8 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 public class StoreEverythingWebSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
-//        int rounds = 12;
-//        return new BCryptPasswordEncoder(rounds);
-        return NoOpPasswordEncoder.getInstance();
+        int rounds = 12;
+        return new BCryptPasswordEncoder(rounds);
     }
     @Autowired
     Logout customLogoutHandler;
