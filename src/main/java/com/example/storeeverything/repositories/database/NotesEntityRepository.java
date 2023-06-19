@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Repository
 public interface NotesEntityRepository extends JpaRepository<NotesEntity, Integer> {
+    List<NotesEntity> findByUser_LoginAndAddDate(String login, Date addDate);
 
     List<NotesEntity> findByUser_LoginAndCategoryName_CategoryName(String login, String name);
     List<NotesEntity> findByUser_LoginOrderByTitleAsc(String login);

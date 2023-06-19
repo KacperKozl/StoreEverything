@@ -4,7 +4,6 @@ import com.example.storeeverything.data.*;
 import com.example.storeeverything.data.database.NotesEntity;
 import com.example.storeeverything.data.database.SharedEntity;
 import com.example.storeeverything.data.database.UsersEntity;
-import com.example.storeeverything.repositories.ItemRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
 import com.example.storeeverything.repositories.database.SharedEntityRepository;
 import com.example.storeeverything.repositories.database.UsersEntityRepository;
@@ -14,9 +13,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -28,7 +25,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,10 +56,14 @@ public class ItemsController {
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
+        List<NotesEntity> notatki=service.getNotesEntityRepository().findByUser_Login(login);
+        List<Date> daty=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toList());
         model.addAttribute("indeks",new Indeks());
-        model.addAttribute("notes",service.getNotesEntityRepository().findByUser_Login(login));
+        model.addAttribute("notes",notatki);
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
+        model.addAttribute("date",new DateWrapper());
+        model.addAttribute("dates_list",daty);
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
         return "index";
     }
@@ -90,18 +91,24 @@ public class ItemsController {
     public String showItems(@ModelAttribute SortIndex sortIndex, Model model, HttpServletResponse response){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
-        if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByTitleAsc(login));
-        if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByTitleDesc(login));
-        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByCategoryName_CategoryNameAsc(login));
-        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByCategoryName_CategoryNameDesc(login));
-        if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByAddDateAsc(login));
-        if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByAddDateDesc(login));
-        if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByReminderDateAsc(login));
-        if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==-1) model.addAttribute("notes",service.getNotesEntityRepository().findByUser_LoginOrderByReminderDateDesc(login));
-        if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==1) model.addAttribute("notes", service.getNotesEntityRepository().sortByPopularCategoriesAsc(login));
-        if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes", service.getNotesEntityRepository().sortByPopularCategoriesDesc(login));
+        List<NotesEntity> notatki=service.getNotesEntityRepository().findByUser_Login(login);
+        if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==1) notatki=service.getNotesEntityRepository().findByUser_LoginOrderByTitleAsc(login);
+        if(sortIndex.getValue().equals("alf")&&sortIndex.getDirection()==-1) notatki=service.getNotesEntityRepository().findByUser_LoginOrderByTitleDesc(login);
+        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==1) notatki=service.getNotesEntityRepository().findByUser_LoginOrderByCategoryName_CategoryNameAsc(login);
+        if(sortIndex.getValue().equals("cat")&&sortIndex.getDirection()==-1) notatki=service.getNotesEntityRepository().findByUser_LoginOrderByCategoryName_CategoryNameDesc(login);
+        if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==1) notatki=service.getNotesEntityRepository().findByUser_LoginOrderByAddDateAsc(login);
+        if(sortIndex.getValue().equals("A_date")&&sortIndex.getDirection()==-1) notatki=service.getNotesEntityRepository().findByUser_LoginOrderByAddDateDesc(login);
+        if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==1) notatki=service.getNotesEntityRepository().findByUser_LoginOrderByReminderDateAsc(login);
+        if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==-1) notatki=service.getNotesEntityRepository().findByUser_LoginOrderByReminderDateDesc(login);
+        if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==1) notatki=service.getNotesEntityRepository().sortByPopularCategoriesAsc(login);
+        if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==-1) notatki=service.getNotesEntityRepository().sortByPopularCategoriesDesc(login);
+        List<Date> daty=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toList());
+        model.addAttribute("indeks",new Indeks());
+        model.addAttribute("notes",notatki);
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
+        model.addAttribute("date",new DateWrapper());
+        model.addAttribute("dates_list",daty);
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
 
         // Tworzenie ciasteczka
@@ -137,22 +144,32 @@ public class ItemsController {
     public String filterByCategory(Category e,Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
+        List<NotesEntity> notatki= notesEntityRepository.findByUser_LoginAndCategoryName_CategoryName(login,e.getName());
+        List<Date> daty=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toList());
+        model.addAttribute("indeks",new Indeks());
+        model.addAttribute("notes",notatki);
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
+        model.addAttribute("date",new DateWrapper());
+        model.addAttribute("dates_list",daty);
         model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
-        model.addAttribute("notes", notesEntityRepository.findByUser_LoginAndCategoryName_CategoryName(login,e.getName()));
         return "index";
     }
-//    @PostMapping("/filterbydate")
-//    public String filterByDate(Model model, HttpServletResponse response){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String login = authentication.getName();
-//        model.addAttribute("sortIndex",new SortIndex());
-//        model.addAttribute("category",new Category("a"));
-//        model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
-//        model.addAttribute("notes", notesEntityRepository.findByUser_LoginAndCategoryName_CategoryName(login,e.getName()));
-//        return "index";
-//    }
+    @RequestMapping("/filterbydate")
+    public String filterByDate(Model model, @ModelAttribute("date") DateWrapper date){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        List<NotesEntity> notatki= notesEntityRepository.findByUser_LoginAndAddDate(login,date.getData());
+        List<Date> daty=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toList());
+        model.addAttribute("indeks",new Indeks());
+        model.addAttribute("notes",notatki);
+        model.addAttribute("sortIndex",new SortIndex());
+        model.addAttribute("category",new Category("a"));
+        model.addAttribute("date",new DateWrapper());
+        model.addAttribute("dates_list",daty);
+        model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
+        return "index";
+    }
     @GetMapping("/category/add")
     public String addCategory(Model model){
         model.addAttribute("newCategory",new Category());
