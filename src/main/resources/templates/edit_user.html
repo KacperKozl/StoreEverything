@@ -14,21 +14,24 @@
     <form class="form" action="#" th:action="@{/users/edit/init}" th:object="${newUser}" method="POST">
       <h2>Edit User</h2>
       <label for="userId">UserId</label>
-      <input th:type="text" th:value="${editedUser.userId}" id="userId" name="userId" disabled/>
+      <input th:type="number" th:value="${editedUser.userId}" id="userId" name="userId"  readonly="readonly"/>
+
+      <label for="login">Login</label>
+      <input th:type="text" th:value="${editedUser.login}" id="login" name="login"  readonly="readonly"/>
 
       <label for="name">Name</label>
-      <input th:type="text" th:value="${editedUser.name}" id="name" name="name" disabled/>
+      <input th:type="text" th:value="${editedUser.name}" id="name" name="name"  readonly="readonly"/>
 
 
       <label for="surname">Surname</label>
-      <input th:type="text" th:value="${editedUser.surname}" id="surname" name="surname" disabled/>
+      <input th:type="text" th:value="${editedUser.surname}" id="surname" name="surname"  readonly="readonly"/>
 
       <label for="age">Age</label>
-      <input type="number" th:value="${editedUser.age}" id="age" name="age" disabled/>
-
+      <input type="number" th:value="${editedUser.age}" id="age" name="age"  readonly="readonly"/>
+      <input type="hidden" th:value="${editedUser.password}" id="password" name="password"/>
       <label for="roleId">RoleId</label>
       <select th:field="*{roleId}" id="roleId" name="roleId">
-        <option th:value="${editedUser.getRoleId()}" th:text="${editedUser.getRoleId()}"></option>
+        <option th:value="${editedUser.getRoleId()}" th:text="${editedUser.getRoleName().getRoleName()}"></option>
         <option th:each="option : ${roles}" th:if="${editedUser.getRoleName().getRoleName() != option.getRoleName()}" th:value="${option.getRoleId()}" th:text="${option.getRoleName()}"></option>
       </select>
 

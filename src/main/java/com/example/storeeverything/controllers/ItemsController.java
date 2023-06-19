@@ -180,6 +180,7 @@ public class ItemsController {
     }
     @PostMapping("/edit")
     public String editNote(@Valid @ModelAttribute("newNote") Note newNote, BindingResult result, Model model){
+        System.out.println(newNote.getId());
         NotesEntity note=service.convertNote(newNote);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();

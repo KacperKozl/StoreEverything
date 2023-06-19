@@ -38,7 +38,7 @@ public class UsersController {
         return "edit_user";
     }
 
-    @PostMapping("/user/edit/init")
+    @PostMapping("/users/edit/init")
     public String editUser(@Valid @ModelAttribute("newUser") User newUser, BindingResult result, Model model) {
        UsersEntity user = service.convertUser(newUser);
         if(result.hasErrors()){
@@ -48,6 +48,6 @@ public class UsersController {
             return "edit_user";
         }
         service.getUsersEntityRepository().save(user);
-        return "users";
+        return "redirect:/users";
     }
 }

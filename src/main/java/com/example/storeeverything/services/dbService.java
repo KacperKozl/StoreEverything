@@ -5,6 +5,7 @@ import com.example.storeeverything.data.Note;
 import com.example.storeeverything.data.User;
 import com.example.storeeverything.data.database.CategoriesEntity;
 import com.example.storeeverything.data.database.NotesEntity;
+import com.example.storeeverything.data.database.RolesEntity;
 import com.example.storeeverything.data.database.UsersEntity;
 import com.example.storeeverything.repositories.database.*;
 import jakarta.transaction.Transactional;
@@ -49,7 +50,8 @@ public class dbService {
         ent.setName(newUser.getName());
         ent.setSurname(newUser.getSurname());
         ent.setAge(newUser.getAge());
-        ent.setRoleId(newUser.getRoleId());
+        RolesEntity role=rolesEntityRepository.findById(newUser.getRoleId()).get();
+        ent.setRoleName(role);
         ent.setLogin((String) newUser.getLogin());
         ent.setPassword(newUser.getPassword());
 

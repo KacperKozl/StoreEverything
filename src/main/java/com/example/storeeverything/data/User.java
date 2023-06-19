@@ -3,14 +3,14 @@ package com.example.storeeverything.data;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-
+@Data
 public class User implements UserDetails {
-    @NotNull
-    @NotEmpty
     private Integer userId;
     @NotNull
     @NotEmpty
@@ -20,16 +20,16 @@ public class User implements UserDetails {
     private String surname;
     @NotNull
     @NotEmpty
-    private Object login;
+    private String login;
     @NotNull
     @NotEmpty
-    private Object password;
+    private String password;
 
     private Integer age;
     private Integer roleId;
 
     public User() {}
-    public User(Integer userId, String name, String surname, Object login, Object password, Integer age, Integer roleId) {
+    public User(Integer userId, String name, String surname, String login, String password, Integer age, Integer roleId) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
@@ -38,8 +38,17 @@ public class User implements UserDetails {
         this.age = age;
         this.roleId = roleId;
     }
+    public User(String userId, String name, String surname, String login, String password, Integer age, Integer roleId) {
+        this.userId = Integer.parseInt(userId);
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.age = age;
+        this.roleId = roleId;
+    }
 
-    public User(Integer userId, String name, String surname, Object login, Object password, Integer roleId) {
+    public User(Integer userId, String name, String surname, String login, String password, Integer roleId) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
@@ -49,7 +58,7 @@ public class User implements UserDetails {
         this.age = null;
     }
 
-    public User(Integer userId, String name, String surname, Object login, Object password) {
+    public User(Integer userId, String name, String surname, String login,String password) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
@@ -65,6 +74,9 @@ public class User implements UserDetails {
 
     public void setId(Integer id) {
         this.userId = id;
+    }
+    public void setId(String id) {
+        this.userId = Integer.parseInt(id);
     }
 
     public String getName() {
@@ -91,11 +103,11 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
-    public Object getLogin() {
+    public String getLogin() {
         return login;
     }
 
-    public void setLogin(Object login) {
+    public void setLogin(String login) {
         this.login = login;
     }
 
