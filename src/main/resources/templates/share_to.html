@@ -3,8 +3,7 @@
 <head>
     <link rel="stylesheet" th:href="@{/styles/text.css}">
     <meta charset="UTF-8">
-<<<<<<< HEAD
-    <title>Edytuj Notatkę</title>
+    <title>Udostępnij notatkę</title>
     <link
             href="https://fonts.googleapis.com/css2?family=Lobster&family=Merriweather&family=Montserrat:wght@400;900&family=Open+Sans:ital,wght@1,300&family=Sacramento&family=Ubuntu+Mono&family=Wix+Madefor+Display:wght@500;600&display=swap"
             rel="stylesheet">
@@ -13,25 +12,29 @@
 <body>
 <header th:insert="navbar.html :: basic"> </header>
 <div class="container">
-    <div class="textbox2" style="position: relative;top:80px"> <div class="textbox1" th:text="${URL}"/></div>
-    <div class="notes-box-item" style="position: relative;top:80px">
+<div class="notes-box">
+    <div class="notes-box-item">
+    <div class="textbox2"> <div class="textbox1" th:text="${URL}"/></div>
+    </div>
+    <div class="notes-box-item">
         <ol th:each="user:${users_list}">
             <div class="notes-box-item">
                 <p class="textbox2">
                     <span class="textbox1" th:text="${user.getLogin()}"/>
                     <span class="textbox1" th:text="${user.getName()}"/>
                     <span class="textbox1" th:text="${user.getSurname()}"/>
-                <div class="notes-box-item-buttons">
-                    <form action="#" th:action="@{/items/shareto/chosen}" th:object="${ind}" method="POST">
-                        <input type="hidden" th:value="${ind.getNoteID()}" name="noteID"/>
-                        <input type="hidden" th:value="${user.getUserId()}" name="userID"/>
-                        <button class="btn" name="submit" type="submit">share</button>
-                    </form>
-                </div>
+                    <div class="notes-box-item-buttons">
+                        <form action="#" th:action="@{/items/shareto/chosen}" th:object="${ind}" method="POST">
+                            <input type="hidden" th:value="${ind.getNoteID()}" name="noteID"/>
+                            <input type="hidden" th:value="${user.getUserId()}" name="userID"/>
+                            <button class="btn" name="submit" type="submit">share</button>
+                        </form>
+                    </div>
 
             </div>
         </ol>
     </div>
+</div>
 </div>
 </body>
 </html>

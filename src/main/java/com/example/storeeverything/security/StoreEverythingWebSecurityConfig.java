@@ -78,18 +78,22 @@ public class StoreEverythingWebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/styles/**").permitAll()
                         .requestMatchers("/register").permitAll()
-                        .requestMatchers("/").permitAll() // access to all users
-                        .requestMatchers("/items/category/*").hasAuthority("full") // only admin
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/login").permitAll()// access to all users
+                        .requestMatchers("/items/category/*").hasAuthority("full")
+                        .requestMatchers("/users").hasAuthority("admin")
+                        .requestMatchers("/items/today").permitAll()
                         .requestMatchers("/items/shared/{id}").permitAll()
+                        .requestMatchers("/items/shareto/mine").hasAnyAuthority("full","limited")
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                        .anyRequest().authenticated() // access to the rest of the resources regardless of the role
+                        .anyRequest().hasAuthority("full") // access to the rest of the resources regardless of the role
                 )
                 .formLogin((form) -> form //redirect to the login page regardless of the string
                         .loginPage("/login")
                         .permitAll()
                         .defaultSuccessUrl("/items/today", true)
                 )
-                .sessionManagement((session)->session.invalidSessionStrategy(customSessionStrategy))
+//                .sessionManagement((session)->session.invalidSessionStrategy(customSessionStrategy))
                 .logout((logout) -> logout.logoutSuccessUrl("/").permitAll().addLogoutHandler(customLogoutHandler))
                 .csrf(csrf -> csrf .ignoringRequestMatchers(toH2Console())).headers().frameOptions().disable();
 

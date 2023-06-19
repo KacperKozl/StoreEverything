@@ -21,7 +21,5 @@ public class Session implements InvalidSessionStrategy {
         service.getNotesEntityRepository().flush();
         service.getUsersEntityRepository().flush();
         service.getSharedEntityRepository().flush();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/");
-        dispatcher.forward(request,response);
     }
 }
