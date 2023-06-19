@@ -8,6 +8,7 @@ import com.example.storeeverything.repositories.ItemRepository;
 import com.example.storeeverything.repositories.database.NotesEntityRepository;
 import com.example.storeeverything.repositories.database.SharedEntityRepository;
 import com.example.storeeverything.repositories.database.UsersEntityRepository;
+import com.example.storeeverything.services.RestNameService;
 import com.example.storeeverything.services.crypto;
 import com.example.storeeverything.services.dbService;
 import jakarta.servlet.http.Cookie;
@@ -45,6 +46,9 @@ public class ItemsController {
     private UsersEntityRepository usersEntityRepository;
     @Autowired
     private SharedEntityRepository sharedEntityRepository;
+
+    @Autowired
+    private RestNameService rest;
 
     @GetMapping("/")
     public String start(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
@@ -165,7 +169,12 @@ public class ItemsController {
         }
         if(service.getCategoriesEntityRepository().findByCategoryName(newCategory.getName())!=null) {
             result.rejectValue("name","newCategory.login","Kategoria już istnieje");
-            return "add_category";}
+            return "add_category";
+        }
+        if(rest.isCategoryNamePolish(newCategory.getName())){
+            result.rejectValue("name","newCategory.login","Kategoria nie może być liczebnikiem");
+            return "add_category";
+        }
         service.addNewCategory(newCategory);
         return "redirect:/items/";
     }
