@@ -40,8 +40,9 @@ public class AuthController {
             model.addAttribute("registrationForm", userData);
             return "register";
         }
+
         try {
-            userService.register(userData);
+                userService.register(userData);
         } catch (UserAlreadyExistException e){
             bindingResult.rejectValue("login", "userData.login","An account already exists for this login.");
             model.addAttribute("registrationForm", userData);

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <link rel="stylesheet" th:href="@{/styles/text.css}">
   <meta charset="UTF-8">
@@ -36,12 +34,20 @@
           </div>
 
           <div class="form-group">
+            <label for="age">Age <i class="fa-sharp fa-solid fa-id-card"></i></label>
+            <input type="number" min="16" max="65" class="form-control"
+                   name="age" id="age" th:field="*{age}"
+                   placeholder="Age">
+          </div>
+
+          <div class="form-group">
             <label for="login">Login <i class="fa-solid fa-user"></i></label>
             <input type="text" class="form-control"
                    name="login" id="login" th:field="*{login}"
                    placeholder="Login">
             <i class="error fa-solid fa-circle-exclamation"></i><span class="message error" th:errors="*{login}">Błąd nazwy</span>
           </div>
+
           <div class="form-group">
             <label for="password">Password <i class="fa-solid fa-lock"></i></label>
             <input type="password" class="form-control"
@@ -51,15 +57,12 @@
           </div>
 
           <div class="form-group">
-            <label for="password">Password <i class="fa-solid fa-lock"></i></label>
+            <label for="repeatPassword">Password <i class="fa-solid fa-lock"></i></label>
             <input type="password" class="form-control"
-                   name="password-confirmation" id="password-confirmation"
+                   name="repeatPassword" id="repeatPassword" th:field="*{repeatPassword}"
                    placeholder="Retype password">
+            <i class="error fa-solid fa-circle-exclamation"></i><span class="message error" th:errors="*{repeatPassword}">Błąd nazwy</span>
           </div>
-
-<!--          <div class="message error" th:if="${#fields.hasErrors('*')}">-->
-<!--            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>-->
-<!--          </div>-->
 
             <button class="btn submit" type="submit">Submit</button>
 
