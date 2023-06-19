@@ -12,7 +12,7 @@ public class RestNameService {
     @Autowired()
     private RestTemplate restTemplate;
 
-    public boolean isCategoryNamePolish(String name)
+    public boolean isNameNotNumeral(String name)
     {
         Boolean response = restTemplate.getForObject("http://localhost:8090/" + name,Boolean.class);
         if(response == null) response = false;

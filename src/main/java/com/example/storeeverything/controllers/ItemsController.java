@@ -195,7 +195,7 @@ public class ItemsController {
             result.rejectValue("name","newCategory.login","Kategoria już istnieje");
             return "add_category";
         }
-        if(rest.isCategoryNamePolish(newCategory.getName())){
+        if(rest.isNameNotNumeral(newCategory.getName())){
             result.rejectValue("name","newCategory.login","Kategoria nie może być liczebnikiem");
             return "add_category";
         }
