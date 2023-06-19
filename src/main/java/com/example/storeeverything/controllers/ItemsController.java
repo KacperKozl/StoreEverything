@@ -27,8 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -61,7 +60,9 @@ public class ItemsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         List<NotesEntity> notatki=service.getNotesEntityRepository().findByUser_Login(login);
-        List<Date> daty=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toList());
+        Set<Date> set=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toSet());
+        List<Date> daty=new ArrayList<>(set);
+        Collections.sort(daty,Collections.reverseOrder());
         model.addAttribute("indeks",new Indeks());
         model.addAttribute("notes",notatki);
         model.addAttribute("sortIndex",new SortIndex());
@@ -106,7 +107,9 @@ public class ItemsController {
         if(sortIndex.getValue().equals("R_date")&&sortIndex.getDirection()==-1) notatki=service.getNotesEntityRepository().findByUser_LoginOrderByReminderDateDesc(login);
         if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==1) notatki=service.getNotesEntityRepository().sortByPopularCategoriesAsc(login);
         if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==-1) notatki=service.getNotesEntityRepository().sortByPopularCategoriesDesc(login);
-        List<Date> daty=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toList());
+        Set<Date> set=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toSet());
+        List<Date> daty=new ArrayList<>(set);
+        Collections.sort(daty,Collections.reverseOrder());
         model.addAttribute("indeks",new Indeks());
         model.addAttribute("notes",notatki);
         model.addAttribute("sortIndex",new SortIndex());
@@ -149,7 +152,9 @@ public class ItemsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         List<NotesEntity> notatki= notesEntityRepository.findByUser_LoginAndCategoryName_CategoryName(login,e.getName());
-        List<Date> daty=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toList());
+        Set<Date> set=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toSet());
+        List<Date> daty=new ArrayList<>(set);
+        Collections.sort(daty,Collections.reverseOrder());
         model.addAttribute("indeks",new Indeks());
         model.addAttribute("notes",notatki);
         model.addAttribute("sortIndex",new SortIndex());
@@ -164,7 +169,9 @@ public class ItemsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         List<NotesEntity> notatki= notesEntityRepository.findByUser_LoginAndAddDate(login,date.getData());
-        List<Date> daty=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toList());
+        Set<Date> set=notatki.stream().map(NotesEntity::getAddDate).collect(Collectors.toSet());
+        List<Date> daty=new ArrayList<>(set);
+        Collections.sort(daty,Collections.reverseOrder());
         model.addAttribute("indeks",new Indeks());
         model.addAttribute("notes",notatki);
         model.addAttribute("sortIndex",new SortIndex());
