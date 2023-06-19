@@ -28,7 +28,6 @@ public class DefaultUserService implements UserService {
                 throw new UserAlreadyExistException("User already exists for this email");
         }
         UsersEntity userEntity = new UsersEntity();
-
         BeanUtils.copyProperties(user, userEntity);
         userEntity.setRoleName(rolesEntityRepository.findByRoleName("limited"));
         encodePassword(userEntity, user);

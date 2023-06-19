@@ -20,8 +20,37 @@ public class UserData implements Serializable {
     @Size(min=5, max=25,message = "{error.size}")
     private String login;
 
+    private Integer age;
+
     @Size(min=5, max=25,message = "{error.size}")
     private String password;
+
+    @Size(min=5, max=25,message = "{error.size}")
+    private String repeatPassword;
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
+    }
+
+    public RolesEntity getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(RolesEntity roleName) {
+        this.roleName = roleName;
+    }
 
     private String roleId;
     private RolesEntity roleName;
