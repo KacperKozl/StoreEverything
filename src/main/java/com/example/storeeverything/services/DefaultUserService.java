@@ -24,9 +24,10 @@ public class DefaultUserService implements UserService {
     @Override
     public void register(UserData user) throws UserAlreadyExistException {
         // Check if user already registered
-        if(checkIfUserExist(user.getLogin())){
-                throw new UserAlreadyExistException("User already exists for this email");
+        if(checkIfUserExist(user.getLogin())) {
+                throw new UserAlreadyExistException("User already exists for this login");
         }
+
         UsersEntity userEntity = new UsersEntity();
         BeanUtils.copyProperties(user, userEntity);
         userEntity.setRoleName(rolesEntityRepository.findByRoleName("limited"));

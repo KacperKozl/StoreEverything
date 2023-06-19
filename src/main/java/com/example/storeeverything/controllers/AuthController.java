@@ -5,10 +5,12 @@ import com.example.storeeverything.services.UserAlreadyExistException;
 import com.example.storeeverything.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class AuthController {
@@ -32,19 +34,24 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String userRegistration(final @Valid UserData userData, final BindingResult bindingResult, final Model model){
-        if(bindingResult.hasErrors()){
+    public String userRegistration(final @Valid UserData userData, final BindingResult bindingResult, final Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("registrationForm", userData);
             return "register";
         }
 
-        try {
-                userService.register(userData);
-        } catch (UserAlreadyExistException e){
-            bindingResult.rejectValue("login", "userData.login","An account already exists for this login.");
-            model.addAttribute("registrationForm", userData);
+        if (!userData.getPassword().equals(userData.getRepeatPassword())) {
             return "register";
         }
-        return "login";
+        else {
+                try {
+                    userService.register(userData);
+                } catch (UserAlreadyExistException e) {
+                    bindingResult.rejectValue("login", "userData.login", "An account already exists for this login.");
+                    model.addAttribute("registrationForm", userData);
+                    return "register";
+                }
+                return "login";
+            }
     }
 }
