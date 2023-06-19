@@ -88,7 +88,7 @@ public class StoreEverythingWebSecurityConfig {
                         .requestMatchers("/items/shared/{id}").permitAll()
                         .requestMatchers("/items/shareto/mine").hasAnyAuthority("full","limited")
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                        .anyRequest().authenticated() // access to the rest of the resources regardless of the role
+                        .anyRequest().hasAuthority("full") // access to the rest of the resources regardless of the role
                 )
                 .formLogin((form) -> form //redirect to the login page regardless of the string
                         .loginPage("/login")
