@@ -46,7 +46,7 @@
                 <form class="form-search" action="#" th:action="@{/items/filterbydate}" th:object="${date}" method="POST">
                     <label th:for="name">Select date:</label>
                     <select th:field="*{data}">
-                        <option th:each="option : ${dates_list}" th:value="${option}" th:text="${option}"></option>
+                        <option th:each="option : ${dates_list}" th:value="${option}" th:text="${date.formatDate(option)}"></option>
                     </select>
                     <button class="btn" name="submit" type="submit" value="0">Search</button>
                 </form>
