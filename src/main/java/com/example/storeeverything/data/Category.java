@@ -12,7 +12,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class Category {
-    @Pattern(regexp = "[a-z]{3,20}",message = "Nazwa kategorii musi mieć pomiędzy 3-20 małych liter.")
+//    @Pattern(regexp = "[a-z]{3,20}",message = "Nazwa kategorii musi mieć pomiędzy 3-20 małych liter.")
+    @Pattern(regexp = "(?U)\\p{Ll}{3,20}",message = "Nazwa kategorii musi mieć pomiędzy 3-20 małych liter.")
     String name;
     public Category(String s){
         name=s;
