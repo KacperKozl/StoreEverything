@@ -1,10 +1,7 @@
 package com.example.storeeverything.data;
 
 import com.example.storeeverything.data.database.RolesEntity;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.Serializable;
 

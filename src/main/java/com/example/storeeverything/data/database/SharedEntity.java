@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "SHARED", schema = "PUBLIC", catalog = "DB")
 @Data

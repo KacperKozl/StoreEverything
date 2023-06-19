@@ -4,14 +4,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.crypto.*;
 import javax.crypto.spec.*;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
+
 
 public class crypto {
     private SecretKeySpec key=new SecretKeySpec((new String("klucz123klucz123")).getBytes(), "AES");;

@@ -16,9 +16,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-////    @Autowired
-//    BCryptPasswordEncoder bCryptpasswordEncoder;
-
     @GetMapping(value="/")
     public String hello() {
         return "startpage";
