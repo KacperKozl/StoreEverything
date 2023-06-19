@@ -63,7 +63,7 @@ public class ItemsController {
         model.addAttribute("notes",service.getNotesEntityRepository().findByUser_Login(login));
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
-        model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+        model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
         return "index";
     }
     @RequestMapping("/today")
@@ -102,7 +102,7 @@ public class ItemsController {
         if(sortIndex.getValue().equals("pop_cat")&&sortIndex.getDirection()==-1) model.addAttribute("notes", service.getNotesEntityRepository().sortByPopularCategoriesDesc(login));
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
-        model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+        model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
 
         // Tworzenie ciasteczka
         Cookie sortCookie = new Cookie("sort.last", sortIndex.getValue() + "#" + sortIndex.getDirection());
@@ -118,7 +118,7 @@ public class ItemsController {
     @GetMapping("/add")
     public String add(Model model){
         model.addAttribute("newNote",new Note());
-        model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+        model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
         return "add_item";
     }
     @PostMapping("/add")
@@ -126,7 +126,7 @@ public class ItemsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         if(result.hasErrors()){
-            model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+            model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
             return "add_item";
         }
         newNote.setAdd_date();
@@ -134,15 +134,25 @@ public class ItemsController {
         return "redirect:/items/";
     }
     @PostMapping("/filterbycategory")
-    public String filterByCategory(Category e,Model model, HttpServletResponse response){
+    public String filterByCategory(Category e,Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         model.addAttribute("sortIndex",new SortIndex());
         model.addAttribute("category",new Category("a"));
-        model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+        model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
         model.addAttribute("notes", notesEntityRepository.findByUser_LoginAndCategoryName_CategoryName(login,e.getName()));
         return "index";
     }
+//    @PostMapping("/filterbydate")
+//    public String filterByDate(Model model, HttpServletResponse response){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String login = authentication.getName();
+//        model.addAttribute("sortIndex",new SortIndex());
+//        model.addAttribute("category",new Category("a"));
+//        model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
+//        model.addAttribute("notes", notesEntityRepository.findByUser_LoginAndCategoryName_CategoryName(login,e.getName()));
+//        return "index";
+//    }
     @GetMapping("/category/add")
     public String addCategory(Model model){
         model.addAttribute("newCategory",new Category());
@@ -163,7 +173,7 @@ public class ItemsController {
     @PostMapping("/edit/init")
     public String editNote(Model model, @ModelAttribute("indeks") Indeks indeks){
         NotesEntity note=service.getNotesEntityRepository().findById(indeks.getValue()).get();
-        model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+        model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
         model.addAttribute("editedNote",note);
         model.addAttribute("newNote",new Note());
         return "edit_note";
@@ -176,7 +186,7 @@ public class ItemsController {
         note.setUser(service.getUsersEntityRepository().findByLogin(login));
         if(result.hasErrors()){
             System.out.println(result.getAllErrors());
-            model.addAttribute("category_list",service.getCategoriesEntityRepository().findAll());
+            model.addAttribute("category_list",service.getCategoriesEntityRepository().findPopular());
             model.addAttribute("editedNote",note);
             return "edit_note";
         }
