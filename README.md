@@ -1,5 +1,7 @@
 # StoreEverything
 
+![StoreEverything data](/Image/StoreEverything.png?raw=true "StoreEverything")
+
 Application description:
 The application is used to save and share valuable information, 
 such as websites, shopping lists or meeting invitations, in the form of notes. Its 
